@@ -1,0 +1,11 @@
+633ae93b61a182c26e9627bf80534c59 *DESCRIPTION
+c6747d14fb68ea8bf35b1595301a5d7e *NAMESPACE
+13a3b48fe5ae7c609f29a57f3b38fd56 *R/LoadNonmemOutput.R
+b8d8eb2f241e032443792f24e2aa235f *R/Simulation.R
+c9d3ee2a5eff561aec5fc3d047f911ff *inst/extdata/run001.cov
+b71bf7dcb7acff96e32768db6d88087c *inst/extdata/run001.ext
+1cdd77dfb2ca04075ea639ce9c5ce24c *man/covload.Rd
+a612042e20d9f7ab12d4137bc7b74a9a *man/extload.Rd
+ed22761ef85010961888374ae1960d0a *man/extload.sub.table.Rd
+1e9586dd9db968343aa6cc3b4a480e90 *man/grid.sim.Rd
+af2e60dfcdd4555d1635155f4370dedc *man/test.grid.sim.Rd
