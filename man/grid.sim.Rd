@@ -4,7 +4,7 @@
 \alias{grid.sim}
 \title{Combine fix grid and simulated grid based on multivariate normal distribution}
 \usage{
-grid.sim(n, means = NULL, sigma, grid.param = NULL, pure.sim = FALSE)
+grid.sim(n, means = NULL, sigma, grid.param = NULL, method = 4)
 }
 \arguments{
 \item{n}{Number of simulations}
@@ -14,20 +14,31 @@ grid.sim(n, means = NULL, sigma, grid.param = NULL, pure.sim = FALSE)
 \item{sigma}{covariance matrix}
 
 \item{grid.param}{the index of the parameter for which a fix grid (from qnorm) is used instead of a simulated grid (rnorm).
-If grid.param=NULL ( default) the fix grid will be used for the parameter with largest variance.}
+If grid.param=NULL (default) the fix grid will be used for the parameter with largest variance.}
 
-\item{pure.sim}{do pure simulation for all parameters, default=FALSE}
+\item{method}{simulation method, default=4}
 }
 \value{
 row-matrix of parameters
 }
 \description{
-grid.sim produce comparable output to mvnorm however with one column having a fixed range of values rather than a
-simulated range of values. As the number of simulations (n) goes to infinity grid.sim is identical to mvnorm in
-that the covariance of the output's both will converge to the input covariance matrix sigma.
-The advantage with grid.sim is that the function provides more stable results, hence number of simulations can
-be reduced and still have equally stable results when used to represent parameter uncertainty and or population variability
-in model predictions.
+grid.sim produce comparable output to mvnorm, however for methods 2 to 4 grid.sim make use of center and scaling,
+and or use a fix grid of values for one column of the output. The intended use of grid.sim is for computing
+confidence intervals (CI) for model predictions.
+Method 1 is the same as rmvnorm, however can handle cases of zero variances in sigma.
+Method 2 is method 1 followed by centering and scaling of the simulated matrix. Thus output when using method 2
+always have sample mean and covariance equal to input parameters means and sigma.
+Method 3 is the same as method 1 however with one column having a fixed range of values rather than a
+simulated range of values.
+Method 4 is method 3 followed by centering and scaling of the simulated matrix. Thus output when using method 4
+always have sample mean and covariance equal to input parameters means and sigma.
+
+As the number of simulations (n) goes to infinity all methods in grid.sim are identical to mvnorm in
+that the sample covariance (mean) of the output will converge to the input covariance matrix sigma (vector means).
+
+The advantage with methods 2 to 4 (over method 1 and rmvnorm) is that they provides more stable results,
+hence number of simulations can be reduced and still have equally stable results when used to represent
+parameter uncertainty and or population variability in model predictions.
 }
 \examples{
 sigma<-matrix(c(1,0.5,0.5,2),ncol=2)

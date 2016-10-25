@@ -19,7 +19,10 @@
 #' @param last.table.only
 #' Include only the last table result for ext files with multiple table results
 #' @return
-#' Named list including theta, omega, sigma, and ofv. For MCMC output file each object are matrixes.
+#' Named list including theta, theta.sd, omega, omega.sd, sigma, sigma.sd, and ofv.
+#' Here .sd is the vector(matrix) with standard errors estimated parameter values in theta(omega & sigma).
+#'
+#' For MCMC output files each object are matrixes.
 #' @export
 #' @importFrom utils read.table
 #' @examples
@@ -85,23 +88,36 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only) {
 			jsigma<-grep("SIGMA",colnames(ext))
 			ii<-which(ext$ITERATION<0)[1]
 			theta<-t(ext[ii,jtheta])[,1]
+			theta.sd<-t(ext[ii+1,jtheta])[,1]
 
 			omegaV<-t(ext[ii,jomega])[,1]
+			omega.SD1<-t(ext[ii+1,jomega])[,1]
 			k<-length(omegaV)
 			n<-sqrt(2*k+1/4)-1/2
 			omega<-matrix(0,n,n)
 			omega[upper.tri(omega,diag=TRUE)]<-omegaV
 			omega[lower.tri(omega,diag=TRUE)]<-t(omega)[lower.tri(omega,diag=TRUE)]
 			colnames(omega)<-rownames(omega)<-paste("OMEGA",1:n,sep="")
+			omega.sd<-omega
+			omega.sd[upper.tri(omega.sd,diag=TRUE)]<-omega.SD1
+			omega.sd[lower.tri(omega.sd,diag=TRUE)]<-t(omega.sd)[lower.tri(omega.sd,diag=TRUE)]
+
 
 			sigmaV<-t(ext[ii,jsigma])[,1]
+			sigma.SD1<-t(ext[ii+1,jsigma])[,1]
 			k<-length(sigmaV)
 			n<-sqrt(2*k+1/4)-1/2
 			sigma<-matrix(0,n,n)
 			sigma[upper.tri(sigma,diag=TRUE)]<-sigmaV
 			sigma[lower.tri(sigma,diag=TRUE)]<-t(sigma)[lower.tri(sigma,diag=TRUE)]
 			colnames(sigma)<-rownames(sigma)<-paste("sigma",1:n,sep="")
-			ret<-list(theta=theta,omega=omega,sigma=sigma)
+			sigma.sd<-sigma
+			sigma.sd[upper.tri(sigma.sd,diag=TRUE)]<-sigma.SD1
+			sigma.sd[lower.tri(sigma.sd,diag=TRUE)]<-t(sigma.sd)[lower.tri(sigma.sd,diag=TRUE)]
+
+			ofv=t(ext[ii,nrow(ext)])[,1]
+
+			ret<-list(theta=theta,theta.sd=theta.sd,omega=omega,omega.sd=omega.sd,sigma=sigma,sigma.sd=sigma.sd,ofv=ofv)
 
 		}
 		else{

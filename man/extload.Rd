@@ -15,7 +15,10 @@ model may include full or relative path to the ext file. See examples.}
 \item{last.table.only}{Include only the last table result for ext files with multiple table results}
 }
 \value{
-Named list including theta, omega, sigma, and ofv. For MCMC output file each object are matrixes.
+Named list including theta, theta.sd, omega, omega.sd, sigma, sigma.sd, and ofv.
+Here .sd is the vector(matrix) with standard errors estimated parameter values in theta(omega & sigma).
+
+For MCMC output files each object are matrixes.
 }
 \description{
 Load parameter values from a nonmem .ext output file.
