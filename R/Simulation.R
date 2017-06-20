@@ -217,6 +217,7 @@ grid.sim.internal1<-function (n, means = NULL, sigma, grid.param = NULL, pure.si
     X <- matrix(X * sqrt(sigma2)/sd(X) + means2)
   }
   res[, !zero.var] <- X
+  res<-res[order(runif(nrow(res))),]
   res
 }
 
@@ -269,7 +270,7 @@ grid.sim.internal2<-function (n, means = NULL, sigma, grid.param = NULL)
 }
 
 ################################################################################################
-### Define version 2 of rmvnorm
+### Define version 3 of rmvnorm
 # @importFrom base scale
 # @importFrom base chol
 #' Internal function

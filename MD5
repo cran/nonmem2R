@@ -1,8 +1,8 @@
-76dccc538e3f1f2ee57265b0e9926a5f *DESCRIPTION
-2321982c5aa15a106d89b2809502ece9 *NAMESPACE
-97caf4a745a611a2aaddca353a9ab587 *R/LoadNonmemOutput.R
-cd891e581fd6c46b538cbe14c1311532 *R/Simulation.R
-10cdc8d937f10eecc87c434d65ebe7fb *R/VPCs.R
+b00aa84cef6eddfd9d302da977880d8a *DESCRIPTION
+f166cc4d447ae1987a60884ec054ad0c *NAMESPACE
+d9b0b4fedbaff822165e3d9e79198e69 *R/LoadNonmemOutput.R
+6e65fdb0d94fd63d7399112dfc767752 *R/Simulation.R
+fa60dbdfb4eeba291dfbd5cdaf971f20 *R/VPCs.R
 c9d3ee2a5eff561aec5fc3d047f911ff *inst/extdata/run001.cov
 b71bf7dcb7acff96e32768db6d88087c *inst/extdata/run001.ext
 3caf092cef00e8c14e8ceca586411466 *inst/extdata/vpc_results.csv
@@ -14,5 +14,6 @@ dfa8fa2b3ba9ece7cd07f55ca384feaf *man/grid.sim.Rd
 c72d8ff64f06e59320beed583c53c06a *man/grid.sim.internal1.Rd
 af93a0136ec348beae7e4bd5416943cd *man/grid.sim.internal2.Rd
 954e627a8f52d0ba694ee266eb7b3613 *man/grid.sim.internal3.Rd
+4f2c64fae8a1eff368cb22375ecdd608 *man/sumoR.Rd
 af2e60dfcdd4555d1635155f4370dedc *man/test.grid.sim.Rd
-1957f803d3a7344fd0b9aa1e987f672a *man/vpcfig.Rd
+2acf7aaf506b331618a92bf96f6ed248 *man/vpcfig.Rd

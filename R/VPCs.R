@@ -44,6 +44,8 @@
 #' @param type
 #' type of VPC plot, 1=display model regions only, 2=as 1 + lines (low, median and high) of data,
 #' 3= as 2 + points for data
+#' type=0 can also be used and then no grapg is produced but instead a list with 2 dataframes is returned.
+#' one for the vpcresult and on for the observed data in the vpctab file.
 #' @param ...
 #' Further arguments, passed to xyplot, e.g xlim and ylim axis limits, main for title of plot, abline for adding reference lines, or
 #' scales for formatting axes, see help files for xyplot.
@@ -206,6 +208,10 @@ vpcfig<-function(vpcdir=NULL,
     Z<-dd2$result.tables[[strata]]
     colnames(Z)<-paste("X",colnames(Z),sep="")
 
+    ## Handle case when Xlower is NA; set to Xupper
+    ii<-is.na(Z$Xlower)
+    Z$Xlower[ii]<-Z$Xupper
+
     #1 remove XX.CI from column names
     n1<-gsub("[123456789][123456789].CI.for","",colnames(Z))
 
@@ -362,6 +368,9 @@ vpcfig<-function(vpcdir=NULL,
   }
 
 
+  if(type==0){
+    pp<-list(model=model0,data=dd1)
+  }
   if(type==1){
     pp<-p2
   }

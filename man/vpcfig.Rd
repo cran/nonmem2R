@@ -52,7 +52,9 @@ Percentile argument must match columns included in the vpcresult file.}
 \item{alpha.segm}{alpha of CI regions (low, median and high) for model, passed to xyplot, default=c(0.5,0.5,0.5)}
 
 \item{type}{type of VPC plot, 1=display model regions only, 2=as 1 + lines (low, median and high) of data,
-3= as 2 + points for data}
+3= as 2 + points for data
+type=0 can also be used and then no grapg is produced but instead a list with 2 dataframes is returned.
+one for the vpcresult and on for the observed data in the vpctab file.}
 
 \item{...}{Further arguments, passed to xyplot, e.g xlim and ylim axis limits, main for title of plot, abline for adding reference lines, or
 scales for formatting axes, see help files for xyplot.
