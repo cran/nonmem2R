@@ -81,7 +81,7 @@ grid.sim<-function (n, means = NULL, sigma, grid.param = NULL, method = 4){
   res
 }
 
-#' Function for testing grid.sim and compare with mvnorm
+#' Function for testing grid.sim and compare with rmvnorm
 #' @description
 #' Test grid.sim
 #' @param n
@@ -89,7 +89,7 @@ grid.sim<-function (n, means = NULL, sigma, grid.param = NULL, method = 4){
 #' @param k
 #' subset of parameters from a 4X4 sigma to use
 #' @return
-#' grapics
+#' graphics
 #' @export
 #' @importFrom lattice xyplot
 #' @examples
@@ -122,9 +122,11 @@ test.grid.sim<-function(n=1000,k=1:4){
 	r<-NULL
 	q<-qnorm(seq(0.5/n,1-0.5/n,length=n))
 	for(i in 1:length(means)){
-		r<-rbind(r,data.frame(i=k[i],q=q,grid.sim=sort(a[,i]),mvnorm=sort(b[,i])))
+		r<-rbind(r,data.frame(i=k[i],q=q,grid.sim=sort(a[,i]),rmvnorm=sort(b[,i])))
 	}
-	p1<-xyplot(grid.sim+mvnorm~q|factor(i),cex=c(0.8,0.6),data=r,as.table=T,auto.key=list(columns=2))
+	p1<-xyplot(grid.sim+rmvnorm~q|factor(i),cex=c(0.8,0.6),data=r,as.table=T,auto.key=list(columns=2))
+	cat("Covariance used for simulation:\n")
+	print(sigma)
 	cat("Covariance from grid.sim output:\n")
 	print(cov(a))
 	cat("Covariance from mvnorm output:\n")
@@ -162,6 +164,8 @@ test.grid.sim<-function(n=1000,k=1:4){
 #' Pure sim or use grid simulation
 #' @return
 #' row-matrix of parameters
+#' @export
+#' @keywords internal
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom stats cov
 #' @importFrom stats qnorm
@@ -238,6 +242,8 @@ grid.sim.internal1<-function (n, means = NULL, sigma, grid.param = NULL, pure.si
 #' If grid.param=NULL ( default) the fix grid will be used for the parameter with largest variance.
 #' @return
 #' row-matrix of parameters
+#' @export
+#' @keywords internal
 #' @importFrom stats cov
 #' @importFrom MASS ginv
 grid.sim.internal2<-function (n, means = NULL, sigma, grid.param = NULL)
@@ -284,6 +290,8 @@ grid.sim.internal2<-function (n, means = NULL, sigma, grid.param = NULL)
 #' covariance matrix
 #' @return
 #' row-matrix of parameters
+#' @export
+#' @keywords internal
 #' @importFrom stats cov
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom stats cov

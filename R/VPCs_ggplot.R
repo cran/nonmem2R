@@ -1,8 +1,8 @@
-#' Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (lattice version).
+#' Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (ggplot2-version).
 #' @description
 #' This function creates VPC using output files from the vpc command in Pearl Speaks NONMEM (PsN).
-#' Graphs are generated using the lattice package with many arguments for plot settings are passed
-#' directly to the xyplot function and have the same flexibility as when used in xyplot.
+#' Graphs are generated using the ggplot2 package and the return object is an ggplot class and
+#' can be further modified, see details below and documentation for ggplot2 for further details.
 #' @param vpcdir
 #' Path of directory of the VPC files
 #' @param vpctab
@@ -18,44 +18,44 @@
 #' percentile to use, default=10 will display 10% 50% and 90% percentile for model and data.
 #' Percentile argument must match columns included in the vpcresult file.
 #' @param xlab
-#' label for x-axis, default is IDV as found in vpcresultfile, passed to xyplot.
+#' label for x-axis, default is IDV as found in vpcresultfile, passed to labs.
 #' @param ylab
-#' label for y-axis, default is DV as found in vpcresultfile, passed to xyplot.
+#' label for y-axis, default is DV as found in vpcresultfile, passed to labs.
 #' @param fy
 #' transformation function for y-axis, default to identity function (f(y)=y).
 #' @param fx
 #' transformation function for x-axis, default to identity function (f(x)=x)
 #' @param col.data
-#' color for data points, passed to xyplot, default=8
+#' color for data points, passed to geom_point, default="gray20"
 #' @param cex.data
-#' cex for data points, passed to xyplot, default=0.3
+#' cex for data points, passed to geom_point, default=1
 #' @param pch.data
-#' plot symbol (pch) for data points, passed to xyplot, default=3
+#' plot symbol (pch) for data points, passed to geom_point, default=19
+#' @param alpha.data
+#' alpha for plotting of data points, passed to geom_point, default=0.5
 #' @param col.line
-#' line color for low quartile, median, and high quartile of data, passed to xyplot, default=c("blue","red","blue")
+#' line color for low quartile, median, and high quartile of data,
+#' passed to geom_line, default="gray20"
 #' @param lwd.line
-#' line width (lwd) for low quartile, median, and high quartile of data, passed to xyplot, default=c(1,2,1)
+#' line width (lwd) for low quartile, median, and high quartile of data, passed to geom_line, default=1
 #' @param lty.line
-#' line type (lty) for low quartile, median, and high quartile of data, passed to xyplot, default=c(1,1,1)
+#' line type (lty) for low quartile, median, and high quartile of data, passed to geom_line,
+#' should be vector of length 3, default=c(2,1,2)
 #' @param col.segm
-#' Color of CI regions (low, median and high) for model, passed to xyplot, default=c("lightblue","pink","lightblue")
+#' Color of CI regions (low, median and high) for model, passed to geom_polygon,
+#' should be vector of length 3, default=c("steelblue", "gray50", "steelblue")
 #' @param alpha.segm
-#' alpha of CI regions (low, median and high) for model, passed to xyplot, default=c(0.5,0.5,0.5)
+#' alpha of CI regions (low, median and high) for model, passed to geom_polygon, default=0.6
 #' @param type
 #' type of VPC plot, 1=display model regions only, 2=as 1 + lines (low, median and high) of data,
 #' 3= as 2 + points for data.
 #' type=0 can also be used and then no graph is produced but instead a list with 2 dataframes is returned.
 #' one for the vpcresult and on for the observed data in the vpctab file.
-#' @param ...
-#' Further arguments, passed to xyplot, e.g xlim and ylim axis limits, main for title of plot, abline for adding reference lines, or
-#' scales for formatting axes, see help files for xyplot.
-#' Note: col, cex, pch, lty, lwd, and alpha should not be used.
-#' Instead use the corresponding arguments defined above.
 #' @return
-#' lattice object of VPC plot
+#' ggplot object of VPC plot
 #' @details
-#' The lattice package is used for creating the VPC and vpcfig have functionality for e.g. modify names of strata,
-#' change layout of panels, use log-scale.
+#' The ggplot2 package is used for creating the VPC and vpcfig2 have functionality for e.g. modify
+#' names of strata, order of and subset of strata's, and transform the x- and or y-axis before plotting.
 #'
 #' The data used is either specified by the directory of the PsN generated files,
 #' or by specifying the file names of both the vpctab-file and the vpcresult file.
@@ -70,14 +70,24 @@
 #' Default is to use all strata's (strata.subset=NULL).
 #'
 #' The fy and fx arguments can be used to alter the scale of data plotted. For example, using fy=function(y){log(y+1)}
-#' is a convenient way to get log-scale for y-axis but with an off-set to show any values==0. Proper y tick marks
-#' can then be set by using the xyplot argument scales.
+#' is a convenient way to get log-scale for y-axis but with an off-set to show any values==0.
+#' Proper y tick marks can then be set using the scale_y_continuous ggplot2 function.
 #'
-#'
+#' Since the returned objest is a ggplot-class object is can be further modified to e.g. to log-scale for y.axis;
+#' vpcfig2(...)+scale_y_log10(),  adding/changing labels & titles;
+#' vpcfig2(...)+labs(y="Modified y-label", title="New title"), etc.
+#' See examples below and documentation for ggplot2 for further details.
 #'
 #' @export
-#' @importFrom lattice panel.polygon
-#' @importFrom latticeExtra as.layer
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_polygon
+#' @importFrom ggplot2 aes_string
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 geom_line
+#' @importFrom ggplot2 geom_point
+#' @importFrom ggplot2 scale_fill_manual
+#' @importFrom ggplot2 scale_linetype_manual
+#' @importFrom ggplot2 facet_wrap
 #' @examples
 #'
 #' # Get path to the example files included in nonmem2R package
@@ -86,12 +96,12 @@
 #'
 #'
 #' # Ex 1, produce VPC with default setting, here specifying both vpctab and vpcresult
-#' vpcfig(vpctab=file1,vpcresult=file2)
+#' vpcfig2(vpctab=file1,vpcresult=file2)
 #'
 #' \dontrun{
 #' # Ex 2, produce VPC with default setting, here specifying only directory of vpc files
 #' path1<-gsub("vpctab004.dat","",file1)
-#' vpcfig(vpcdir=path1)
+#' vpcfig2(vpcdir=path1)
 #'}
 #'
 #' # Ex 3, produce VPC with i) modifies strata names, ii) strata in reverse order, and
@@ -99,12 +109,30 @@
 #' strata.names<-c("Group A","Group B")
 #' xlab<-"Time after dose (hrs)"
 #' ylab<-"Plasma Conc(mmol/L)"
-#' vpcfig(vpctab=file1,vpcresult=file2,strata.names=strata.names,strata.subset=2:1,
+#' vpcfig2(vpctab=file1,vpcresult=file2,strata.names=strata.names,strata.subset=2:1,
 #'        xlab=xlab,ylab=ylab)
+#'
+
+#'
+#' # Example using the fy argument to transform y-axis setting y-ticks using scale_y_continuous(...)
+#' tmp<-c(1,2,3,4,6)
+#' yticks<-c(0.1,tmp,tmp*10,tmp*100,tmp*1000)
+#' vpcfig2(vpctab=file1,vpcresult=file2,fy=function(y){log(y+1)})+
+#'  scale_y_continuous(breaks=log(yticks+1),labels=yticks,minor_breaks=NULL)
+#'
+#' \dontrun{
+#' # Example changing to slog-scale using the ggplot2 function scale_y_log10
+#' vpcfig2(vpctab=file1,vpcresult=file2)+scale_y_log10()
+#'}
+#' # Example changing y-axis label and adding figure title using ggplot2 function labs(...).
+#' vpcfig2(vpctab=file1,vpcresult=file2)+labs(y="Modified y-label", title="New title")
+#'
+#'
+
+
 
 #################
-
-vpcfig<-function(vpcdir=NULL,
+vpcfig2<-function(vpcdir=NULL,
                  vpctab=NULL,
                  vpcresult=NULL,
                  strata.names=NULL,
@@ -113,13 +141,11 @@ vpcfig<-function(vpcdir=NULL,
                  fy=function(y){y},fx=function(x){x},
                  xlab=NULL,
                  ylab=NULL,
-                 col.data=8,cex.data=0.3,pch.data=3,
-                 col.line=c("blue","red","blue"),
-                 lwd.line=c(1,2,1),
-                 lty.line=c(1,1,1),
-                 col.segm=c("lightblue","pink","lightblue"),
-                 alpha.segm=c(0.5,0.5,0.5),
-                 type=3,...)
+                 col.data="gray20",cex.data=1,pch.data=19,alpha.data=0.5,
+                 col.line='grey20',lwd.line=1,lty.line=c(2,1,2),
+                 col.segm=c("steelblue", "gray50", "steelblue"),
+                 alpha.segm=0.6,
+                 type=3)
 {
   if((is.null(vpctab) | is.null(vpcresult)) & is.null(vpcdir)){
     stop("Use either both vpctab and vpcresult or vpcdir")
@@ -139,14 +165,10 @@ vpcfig<-function(vpcdir=NULL,
   }
   cat("VPC based on files:\n  ",vpctab,"\nand\n  ",vpcresult,"\n")
 
-
-
   dd1<-read.table(file=vpctab,sep=",",header=T)
   dd1$id<-as.numeric(factor(dd1$ID))
 
-  #dd2<-read.npc.vpc.results(vpc.results = vpcresult) # Expose func
   dd2<-readVpc(vpc.results = vpcresult)              # Alt1
-  #dd2<-loadVPC(vpcresult)                             # Alt2
 
   ## Change names for DV and TIME in the raw data dataframe dd1
   ii<-match(c(dd2$dv.var,dd2$idv.var),colnames(dd1))
@@ -217,7 +239,6 @@ vpcfig<-function(vpcdir=NULL,
 
     #1 remove XX.CI from column names
     n1<-gsub("[123456789][123456789].CI.for","",colnames(Z))
-
     #2 find right columns for percentile, & rename
     iL<-c(grep(paste("X",percentile,"[.]",sep=""),n1),
           grep(paste("X[.]",percentile,"[.]",sep=""),n1))
@@ -243,7 +264,7 @@ vpcfig<-function(vpcdir=NULL,
     Z$Xlower[nrow(Z)]<-Z$Xupper[nrow(Z)]
 
 
-    datai<-data.frame(	x=(Z$Xupper+Z$Xlower)/2,
+    datai<-data.frame(  x=(Z$Xupper+Z$Xlower)/2,
                        low=Z$XL.real,
                        med=Z$XM.real,
                        upp=Z$XU.real)
@@ -257,11 +278,11 @@ vpcfig<-function(vpcdir=NULL,
     x1<-(Z$Xupper+Z$Xlower)/2
     x1<-c(x1,rev(x1))
     modeli<-data.frame(x=x1,
-                       low=c(	Z$X.L.from,
+                       low=c(   Z$X.L.from,
                               rev(Z$X.L.to)),
-                       med=c(	Z$X.M.from,
+                       med=c(   Z$X.M.from,
                               rev(Z$X.M.to)),
-                       upp=c(	Z$X.U.from,
+                       upp=c(   Z$X.U.from,
                               rev(Z$X.U.to))
     )
 
@@ -273,117 +294,60 @@ vpcfig<-function(vpcdir=NULL,
   data0$strata<-factor(data0$strata,levels=strata.subset)
   model0$strata<-factor(model0$strata,levels=strata.subset)
 
-
-  ############### Case of stratified VPC (n.strata>1)
-  if(n.strata>1 & length(strata.subset)>1){
-    ### Plot median,low & upp of data
-    p1<-xyplot(fy(low)+fy(med)+fy(upp)~fx(x)|strata,
-             #abline=abline,
-             ## Here control the collor,lty and lwd for the data
-             lty=lty.line,
-             lwd=lwd.line,
-             col=col.line,
-             type='l',
-             as.table=T,
-             xlab=xlab,
-             ylab=ylab,
-             data=data0,...
-    )
-
-
-    p2<-xyplot(fy(med)+fy(low)+fy(upp)~fx(x)|strata,
-             #abline=abline,
-             panel=function(x,y,...){
-               n<-length(x)/3
-               ## The low region
-               i1<-(1:n)+n
-               color=col.segm[1]
-               alpha=alpha.segm[1]
-               panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-               ## The upper region
-               i1<-(1:n)+n*2
-               color=col.segm[3]
-               alpha=alpha.segm[3]
-               panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-               ## Here control the color of regions
-               ## The median region
-               i1<-1:n
-               color=col.segm[2]
-               alpha=alpha.segm[2]
-               panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-             },
-             as.table=T,
-             xlab=xlab,
-             ylab=ylab,
-             data=model0,...
-    )
-
-
-    p3<-xyplot(fy(DV)~fx(TIME)|strata,as.table=T,data=dd1,col=col.data,cex=cex.data,pch=pch.data,...)
-  }
-
-  ############### Case of not stratified VPC (n.strata==1), or length(strata.subset)==1
-  else{
-    ### Plot median,low & upp of data
-    p1<-xyplot(fy(low)+fy(med)+fy(upp)~fx(x),
-               #abline=abline,
-               ## Here control the collor,lty and lwd for the data
-               lty=lty.line,
-               lwd=lwd.line,
-               col=col.line,
-               type='l',
-               as.table=T,
-               xlab=xlab,
-               ylab=ylab,
-               data=data0,...
-    )
-
-
-    p2<-xyplot(fy(med)+fy(low)+fy(upp)~fx(x),
-               #abline=abline,
-               panel=function(x,y,...){
-                 n<-length(x)/3
-                 ## The low region
-                 i1<-(1:n)+n
-                 color=col.segm[1]
-                 alpha=alpha.segm[1]
-                 panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-                 ## The upper region
-                 i1<-(1:n)+n*2
-                 color=col.segm[3]
-                 alpha=alpha.segm[3]
-                 panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-                 ## Here control the color of regions
-                 ## The median region
-                 i1<-1:n
-                 color=col.segm[2]
-                 alpha=alpha.segm[2]
-                 panel.polygon(x[i1],y[i1],col=color,border=color,alpha=alpha)
-               },
-               as.table=T,
-               xlab=xlab,
-               ylab=ylab,
-               data=model0,...
-    )
-
-
-    p3<-xyplot(fy(DV)~fx(TIME),as.table=T,data=dd1,col=col.data,cex=cex.data,pch=pch.data,...)
-  }
-
-
   if(type==0){
-    pp<-list(model=model0,data=dd1)
+    pp<-list(model0=model0,data0=data0,dd1=dd1)
   }
-  if(type==1){
-    pp<-p2
-  }
-  if(type==2){
-    pp<-p2+as.layer(p1)
-  }
-  if(type==3){
-    pp<-p2+ as.layer(p3)+as.layer(p1)
-  }
+  if(type>0){
+	##### Rformatting of data0 and model0
+	group.labs<-c(paste(percentile,"th percentile",sep=""),"Median",paste(100-percentile,"th percentile",sep=""))
 
+
+	to_thin<-function(x,labs=c("2.5th percentile??","Median ?!?","97.5th percentile")){
+		low<-x[,!(colnames(x) %in% c("med","upp"))]
+		med<-x[,!(colnames(x) %in% c("low","upp"))]
+		upp<-x[,!(colnames(x) %in% c("low","med"))]
+		low$group<-labs[1]
+		med$group<-labs[2]
+		upp$group<-labs[3]
+		colnames(low)[colnames(low)=="low"]<-"value"
+		colnames(med)[colnames(med)=="med"]<-"value"
+		colnames(upp)[colnames(upp)=="upp"]<-"value"
+		y<-rbind(low,med,upp)
+		y$group<-factor(y$group,levels=rev(labs))
+		y
+	}
+
+	model0<-to_thin(model0,labs=group.labs)
+	model0$group2<-model0$group
+
+	data0<-to_thin(data0,labs=group.labs)
+
+	#####
+	pp <- ggplot(data = NULL)
+
+	# Add shadded areas from model
+	pp <- pp + geom_polygon(aes_string(x = 'fx(x)', y = 'fy(value)',group='group2',fill='group2'),data=model0,alpha=alpha.segm)+
+  labs(fill="Model")
+
+	if(type>1){ # Add lines from data
+		pp <- pp + geom_line(aes_string(x='fx(x)',y='fy(value)',group='group',linetype='group'),data=data0,lwd=lwd.line,color=col.line)+
+		labs(linetype="Data")
+	}
+	if(type>2){ # Add points for from data
+		pp <- pp + geom_point(aes_string(x='fx(TIME)',y='fy(DV)'),data=dd1,color=col.data,alpha=alpha.data,cex=cex.data)
+	}
+
+	## Add formatting
+	pp<-pp+
+	labs(y=ylab,x=xlab)+
+	scale_fill_manual(values=col.segm)+
+	scale_linetype_manual(values=lty.line)
+
+	## Add strata if needed
+	if(n.strata>1 & length(strata.subset)>1){
+		pp<-pp+facet_wrap(~strata)
+	}
+  }
   pp
 }
 

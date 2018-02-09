@@ -4,7 +4,8 @@
 \alias{extload.sub.table}
 \title{Internal package function}
 \usage{
-extload.sub.table(model, skip, nrows, positive.iterations.only)
+extload.sub.table(model, skip, nrows, positive.iterations.only,
+  use.model.path = TRUE)
 }
 \arguments{
 \item{model}{model}
@@ -14,6 +15,9 @@ extload.sub.table(model, skip, nrows, positive.iterations.only)
 \item{nrows}{number of rows to read}
 
 \item{positive.iterations.only}{positive iterations only}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
 }
 \value{
 Named list including theta, omega, sigma, and ofv. For MCMC output file each object are matrixes.
@@ -21,4 +25,5 @@ Named list including theta, omega, sigma, and ofv. For MCMC output file each obj
 \description{
 Internal package function
 }
+\keyword{internal}
 

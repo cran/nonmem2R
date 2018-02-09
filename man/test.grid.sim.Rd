@@ -2,7 +2,7 @@
 % Please edit documentation in R/Simulation.R
 \name{test.grid.sim}
 \alias{test.grid.sim}
-\title{Function for testing grid.sim and compare with mvnorm}
+\title{Function for testing grid.sim and compare with rmvnorm}
 \usage{
 test.grid.sim(n = 1000, k = 1:4)
 }
@@ -12,7 +12,7 @@ test.grid.sim(n = 1000, k = 1:4)
 \item{k}{subset of parameters from a 4X4 sigma to use}
 }
 \value{
-grapics
+graphics
 }
 \description{
 Test grid.sim

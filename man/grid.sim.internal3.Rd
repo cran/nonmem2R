@@ -19,4 +19,5 @@ row-matrix of parameters
 \description{
 Internal function
 }
+\keyword{internal}
 

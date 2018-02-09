@@ -2,15 +2,15 @@ Package: nonmem2R
 Type: Package
 Title: Loading NONMEM Output Files and Simulate with Parameter
         Uncertainty
-Version: 0.1.7
+Version: 0.1.8
 Author: Magnus Astrand
 Maintainer: Magnus Astrand <magnus.astrand@astrazeneca.com>
 Description: Loading NONMEM (NONlinear Mixed-Effect Modeling, <http://www.iconplc.com/innovation/solutions/nonmem/> ) output files and simulate with parameter uncertainty.
 License: Unlimited
-Depends: R (>= 3.0.0), mvtnorm, lattice, latticeExtra, MASS, xpose4
+Depends: R (>= 3.0.0), mvtnorm, lattice, latticeExtra, MASS, ggplot2
 LazyData: TRUE
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2017-06-20 19:37:13 UTC; Magnus
+Packaged: 2018-02-09 15:34:12 UTC; Magnus
 Repository: CRAN
-Date/Publication: 2017-06-20 21:27:57 UTC
+Date/Publication: 2018-02-09 15:49:50 UTC

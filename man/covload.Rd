@@ -4,10 +4,13 @@
 \alias{covload}
 \title{Load the covariance matrix from a nonmem .cov output file.}
 \usage{
-covload(model, theta.only = T)
+covload(model, use.model.path = TRUE, theta.only = T)
 }
 \arguments{
-\item{model}{name of the cov file without the .cov extension. model may include full or relative path to the cov file. See examples.}
+\item{model}{name of the cov file with or without the .cov extension. model may include full or relative path to the cov file. See examples.}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
 
 \item{theta.only}{return covariance matrix of theta's only (default)}
 }

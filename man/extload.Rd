@@ -4,11 +4,15 @@
 \alias{extload}
 \title{Load final parameter values from a nonmem .ext output file.}
 \usage{
-extload(model, positive.iterations.only = T, last.table.only = T)
+extload(model, use.model.path = TRUE, positive.iterations.only = TRUE,
+  last.table.only = TRUE)
 }
 \arguments{
 \item{model}{name of the ext file with or without the .ext extension.
 model may include full or relative path to the ext file. See examples.}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
 
 \item{positive.iterations.only}{Include only rows with ITERATIONS>0 from MCMC and SEAM table results (default=TRUE)}
 

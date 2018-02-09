@@ -4,10 +4,24 @@
 \alias{sumoR}
 \title{Compile summary information of for NONMEM model based on the lst file, ext file, and the cov file.}
 \usage{
-sumoR(model)
+sumoR(model, use.model.path = TRUE, tableType = 2,
+  format.estimate = "\% -#6.4g", format.rse = "\%#6.3g")
 }
 \arguments{
-\item{model}{name of the lst file without the .lst extension. model may include full or relative path to the lst file.}
+\item{model}{name of the lst file with or without the .lst extension. model may include full or relative path to the lst file.}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
+
+\item{tableType}{Table type for THETA's, OMEGA's and SIGMA's \cr
+tableType=0: Present OMEGA and SIGMA as variance and covariances and display SE for THETA, OMEGA, SIGMA \cr
+tableType=1: Present OMEGA and SIGMA as variance and covariances and display RSE for THETA, OMEGA, SIGMA \cr
+tableType=2: Present OMEGA and SIGMA as standard-deviation and correlations and display RSE for THETA, OMEGA, SIGMA \cr
+tableType=3: Present OMEGA and SIGMA as standard-deviation and correlations and display SE for THETA, OMEGA, SIGMA \cr}
+
+\item{format.estimate}{format for estimated value, passed to sprintf}
+
+\item{format.rse}{format for RSE or SE, passed to sprintf}
 }
 \value{
 named list of class sumoR
@@ -15,5 +29,12 @@ named list of class sumoR
 \description{
 Compile summary information similar to that of the sumo PSN function, based on the NONMEM output files
 lst, ext, and if covariance setp was run, the cov file.
+}
+\examples{
+##### Compile summary information from the .lst file "run001.lst"
+# 1) Get path to the example file included in nonmem2R package
+file1 <- system.file("extdata", "run001.lst", package = "nonmem2R")
+# 2) Compile summary information from "run001.lst"
+sumoR(file1)
 }
 
