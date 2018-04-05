@@ -37,4 +37,3 @@ file1 <- system.file("extdata", "run001.lst", package = "nonmem2R")
 # 2) Compile summary information from "run001.lst"
 sumoR(file1)
 }
-

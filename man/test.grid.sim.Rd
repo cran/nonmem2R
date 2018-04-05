@@ -23,4 +23,3 @@ require(lattice)
 test.grid.sim(n=1000)
 }
 }
-

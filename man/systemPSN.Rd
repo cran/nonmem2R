@@ -26,4 +26,3 @@ try(systemPSN("who", intern = TRUE))
 try(systemPSN("ls fizzlipuzzli", intern = TRUE, ignore.stderr = TRUE))
 # zero-length result since file does not exist, and will give warning.
 }
-

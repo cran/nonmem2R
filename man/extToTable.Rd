@@ -15,9 +15,13 @@ model may include full or relative path to the ext file. See examples.}
 If so will look for a global character vector named \code{model.path}}
 
 \item{tableType}{Table type for THETA's, OMEGA's and SIGMA's
+
 tableType=0: Present OMEGA and SIGMA as variance and covariances and display SE for THETA, OMEGA, SIGMA
+
 tableType=1: Present OMEGA and SIGMA as variance and covariances and display RSE for THETA, OMEGA, SIGMA
+
 tableType=2: Present OMEGA and SIGMA as standard-deviation and correlations and display RSE for THETA, OMEGA, SIGMA
+
 tableType=3: Present OMEGA and SIGMA as standard-deviation and correlations and display SE for THETA, OMEGA, SIGMA}
 
 \item{wide}{produce a wide 9-column table (wide=TRUE, default) or a thin 3-column table(wide=FALSE)}
@@ -42,4 +46,3 @@ file1 <- system.file("extdata", "run001.ext", package = "nonmem2R")
 extToTable(file1)
 
 }
-

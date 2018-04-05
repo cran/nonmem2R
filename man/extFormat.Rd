@@ -20,4 +20,3 @@ a character-matrix
 Formatting of the named list returned by extload
 }
 \keyword{internal}
-

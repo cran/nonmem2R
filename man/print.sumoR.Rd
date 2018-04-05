@@ -15,4 +15,3 @@
 Print function for compiled summary information of class sumoR
 }
 \keyword{internal}
-

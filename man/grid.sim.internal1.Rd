@@ -26,4 +26,3 @@ row-matrix of parameters
 Internal function
 }
 \keyword{internal}
-

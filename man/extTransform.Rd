@@ -21,4 +21,3 @@ named list according to output from extload
 Transforming of the named list returned by extload
 }
 \keyword{internal}
-

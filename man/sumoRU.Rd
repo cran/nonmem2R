@@ -16,4 +16,3 @@ named list
 Internal function for sumoR on unix/linux system
 }
 \keyword{internal}
-

@@ -46,4 +46,3 @@ sim1<-grid.sim(1000,sigma=sigma)
 pairs(sim1)
 cov(sim1)
 }
-

@@ -41,4 +41,3 @@ file1 <- system.file("extdata", "run001.ext", package = "nonmem2R")
 # 2) Load the file using the extload function
 extload(file1)
 }
-

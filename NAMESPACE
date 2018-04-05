@@ -3,6 +3,7 @@
 S3method(print,extToTable)
 S3method(print,sumoR)
 export(covload)
+export(covload.sub.table)
 export(extFormat)
 export(extToTable)
 export(extTransform)

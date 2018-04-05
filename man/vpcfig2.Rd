@@ -5,12 +5,12 @@
 \title{Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (ggplot2-version).}
 \usage{
 vpcfig2(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
-  strata.names = NULL, strata.subset = NULL, percentile = 10,
-  fy = function(y) {     y }, fx = function(x) {     x }, xlab = NULL,
-  ylab = NULL, col.data = "gray20", cex.data = 1, pch.data = 19,
-  alpha.data = 0.5, col.line = "grey20", lwd.line = 1, lty.line = c(2,
-  1, 2), col.segm = c("steelblue", "gray50", "steelblue"), alpha.segm = 0.6,
-  type = 3)
+  use.model.path = TRUE, strata.names = NULL, strata.subset = NULL,
+  percentile = 10, fy = function(y) {     y }, fx = function(x) {     x },
+  xlab = NULL, ylab = NULL, col.data = "gray20", cex.data = 1,
+  pch.data = 19, alpha.data = 0.5, col.line = "grey20", lwd.line = 1,
+  lty.line = c(2, 1, 2), col.segm = c("steelblue", "gray50", "steelblue"),
+  alpha.segm = 0.6, type = 3)
 }
 \arguments{
 \item{vpcdir}{Path of directory of the VPC files}
@@ -18,6 +18,9 @@ vpcfig2(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
 \item{vpctab}{Path to the vpctab-file}
 
 \item{vpcresult}{Path to the vpcresult file}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
 
 \item{strata.names}{Character vector for strata names. Must have length equal to number of strata's in vpc files, otherwise ignored.}
 
@@ -80,18 +83,37 @@ See examples 1 and 2 below.
 Names of strata can be changed with the strata.names argument, if strata.names
 is NULL the names as specified in the vpcresult file are used.
 
-strata.subset can be used to select a subset of strata, and or to change the order of stratas. Se example 3.
-NOTE: strata.subset is matched with strata.names unless strata.names=NULL.
+strata.subset can be used to select a subset of strata, and or to change the order of stratas.
+See example 3.
+
+\strong{Strata.subset} is matched with strata.names unless strata.names=NULL.
 If strata.names=NULL then strata.subset is matched to names as specified in vpcresult file.
 Default is to use all strata's (strata.subset=NULL).
 
-The fy and fx arguments can be used to alter the scale of data plotted. For example, using fy=function(y){log(y+1)}
+The fy and fx arguments can be used to alter the scale of data plotted.
+For example, using \code{fy=function(y){log(y+1)}}
 is a convenient way to get log-scale for y-axis but with an off-set to show any values==0.
-Proper y tick marks can then be set using the scale_y_continuous ggplot2 function.
+Proper y tick marks can then be set using the \code{scale_y_continuous} ggplot2 function.
 
-Since the returned objest is a ggplot-class object is can be further modified to e.g. to log-scale for y.axis;
-vpcfig2(...)+scale_y_log10(),  adding/changing labels & titles;
-vpcfig2(...)+labs(y="Modified y-label", title="New title"), etc.
+Since the returned objest is a ggplot-class object is can be further modified to e.g. to
+log-scale for y.axis;
+
+\code{vpcfig2(...)+scale_y_log10()},
+
+adding/changing labels & titles;
+
+\code{vpcfig2(...)+labs(y="Modified y-label", title="New title")}.
+
+\strong{Axis-limits} are preferably set using the ggplot2 function
+\code{coord_cartesian(...)}. This way data points outside the axis-limit are only hidden when
+plotting. Setting axis-limits using e.g. \code{scale_x_continuous}, \code{scale_x_log10}, or
+\code{xlim} may produce
+an incorrect vpcplot.
+This because data outside the axis-limits is deleted before plotting.
+
+\strong{Stratified} VPC's are created with \code{facet_wrap(~strata)} as deafult but can be
+modified to use \code{facet_grid} for setting the panel grid.
+
 See examples below and documentation for ggplot2 for further details.
 }
 \examples{
@@ -134,4 +156,3 @@ vpcfig2(vpctab=file1,vpcresult=file2)+labs(y="Modified y-label", title="New titl
 
 
 }
-

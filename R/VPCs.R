@@ -9,6 +9,9 @@
 #' Path to the vpctab-file
 #' @param vpcresult
 #' Path to the vpcresult file
+#' @param use.model.path
+#' Load file from a global defined model library (TRUE=default).
+#' If so will look for a global character vector named \code{model.path}
 #' @param strata.names
 #' Character vector for strata names. Must have length equal to number of strata's in vpc files, otherwise ignored.
 #' @param strata.subset
@@ -107,6 +110,7 @@
 vpcfig<-function(vpcdir=NULL,
                  vpctab=NULL,
                  vpcresult=NULL,
+                 use.model.path=TRUE,
                  strata.names=NULL,
                  strata.subset=NULL,
                  percentile=10,
@@ -121,17 +125,34 @@ vpcfig<-function(vpcdir=NULL,
                  alpha.segm=c(0.5,0.5,0.5),
                  type=3,...)
 {
+  #### Check for global model.path
+  file.path<-""
+  model.path.ok<-FALSE
+  if(use.model.path & exists("model.path")){
+    eval(parse(text="model.path.ok<-dir.exists(model.path)"))
+    if(model.path.ok){
+      eval(parse(text="file.path<-model.path"))
+    }
+  }
+
   if((is.null(vpctab) | is.null(vpcresult)) & is.null(vpcdir)){
     stop("Use either both vpctab and vpcresult or vpcdir")
   }
   if(is.null(vpctab)){
-    vpctab<-list.files(path=vpcdir,pattern="vpctab",full.names=TRUE)
+    vpctab<-list.files(path=paste(file.path,vpcdir,sep=""),pattern="vpctab",full.names=TRUE)
     if(length(vpctab)==0){
-      stop(paste("No vpctab file found in folder",vpcdir))
+      if(file.path!=""){
+        warning(paste("No vpctab file found in folder",paste(file.path,vpcdir,sep=""),". Trying without using the specified model.path"))
+        file.path<-""
+        vpctab<-list.files(path=paste(file.path,vpcdir,sep=""),pattern="vpctab",full.names=TRUE)
+      }
+      if(length(vpctab)==0){
+        stop(paste("No vpctab file found in folder",paste(file.path,vpcdir,sep="")))
+      }
     }
   }
   if(is.null(vpcresult)){
-    vpcresult<-paste(vpcdir,"/vpc_results.csv",sep="")
+    vpcresult<-paste(file.path,vpcdir,"/vpc_results.csv",sep="")
   }
 
   if(!file.exists(vpctab) | !file.exists(vpcresult)){

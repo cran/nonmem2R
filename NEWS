@@ -1,0 +1,14 @@
+nonmem2R v0.1.9 (Release date: 2018-04-06)
+==============
+
+Changes:
+
+* Added model.path argument to vpcfig & vpcfig2, with similar use of model.path as in e.g. sumoR & extload
+
+* Add footnote extToTable to keep track if OMEGA and SIGMA are reported as variances or as standard-deviations
+
+* Updated covload to handle cov files with multiple tables from NONMEM model files with multiple $COV and/or multiple $EST.
+
+* Fixed column names for covload output
+
+* Updated help-page for vpcfig2 with advice for setting axis limits

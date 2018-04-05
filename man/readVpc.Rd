@@ -22,4 +22,3 @@ Named list
 Internal package function
 }
 \keyword{internal}
-

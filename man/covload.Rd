@@ -4,7 +4,8 @@
 \alias{covload}
 \title{Load the covariance matrix from a nonmem .cov output file.}
 \usage{
-covload(model, use.model.path = TRUE, theta.only = T)
+covload(model, use.model.path = TRUE, last.table.only = TRUE,
+  theta.only = TRUE)
 }
 \arguments{
 \item{model}{name of the cov file with or without the .cov extension. model may include full or relative path to the cov file. See examples.}
@@ -12,14 +13,21 @@ covload(model, use.model.path = TRUE, theta.only = T)
 \item{use.model.path}{Load file from a global defined model library (TRUE=default).
 If so will look for a global character vector named \code{model.path}}
 
+\item{last.table.only}{Include only the last table result for cov files with multiple table results}
+
 \item{theta.only}{return covariance matrix of theta's only (default)}
 }
 \value{
-the covariance matrix
+The covariance matrix or a named list of covariance matrix's
 }
 \description{
 Load the covariance matrix from a nonmem .cov output file.
 Either the covariance matrix of all THETA parameters (default) or the covariance matrix of all parameters, THETA, OMEGA and SIGMA.
+
+For cov-files with multiple table results either only the last table result is loaded
+(last.table.only=TRUE, default) or all table results are loaded (last.table.only=FALSE).
+The result is then a named list of covariance matrix's,
+\code{LastTable} is the last table in the cov-files.
 }
 \examples{
 ##### Load the .cov file "run001.cov"
@@ -28,4 +36,3 @@ file1 <- system.file("extdata", "run001.cov", package = "nonmem2R")
 # 2) Load the file using the covload function
 covload(file1)
 }
-

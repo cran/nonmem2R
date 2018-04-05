@@ -5,11 +5,11 @@
 \title{Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (lattice version).}
 \usage{
 vpcfig(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
-  strata.names = NULL, strata.subset = NULL, percentile = 10,
-  fy = function(y) {     y }, fx = function(x) {     x }, xlab = NULL,
-  ylab = NULL, col.data = 8, cex.data = 0.3, pch.data = 3,
-  col.line = c("blue", "red", "blue"), lwd.line = c(1, 2, 1),
-  lty.line = c(1, 1, 1), col.segm = c("lightblue", "pink", "lightblue"),
+  use.model.path = TRUE, strata.names = NULL, strata.subset = NULL,
+  percentile = 10, fy = function(y) {     y }, fx = function(x) {     x },
+  xlab = NULL, ylab = NULL, col.data = 8, cex.data = 0.3,
+  pch.data = 3, col.line = c("blue", "red", "blue"), lwd.line = c(1, 2,
+  1), lty.line = c(1, 1, 1), col.segm = c("lightblue", "pink", "lightblue"),
   alpha.segm = c(0.5, 0.5, 0.5), type = 3, ...)
 }
 \arguments{
@@ -18,6 +18,9 @@ vpcfig(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
 \item{vpctab}{Path to the vpctab-file}
 
 \item{vpcresult}{Path to the vpcresult file}
+
+\item{use.model.path}{Load file from a global defined model library (TRUE=default).
+If so will look for a global character vector named \code{model.path}}
 
 \item{strata.names}{Character vector for strata names. Must have length equal to number of strata's in vpc files, otherwise ignored.}
 
@@ -113,4 +116,3 @@ ylab<-"Plasma Conc(mmol/L)"
 vpcfig(vpctab=file1,vpcresult=file2,strata.names=strata.names,strata.subset=2:1,
        xlab=xlab,ylab=ylab)
 }
-

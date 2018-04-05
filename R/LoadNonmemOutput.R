@@ -14,9 +14,13 @@
 #' If so will look for a global character vector named \code{model.path}
 #' @param tableType
 #' Table type for THETA's, OMEGA's and SIGMA's
+#'
 #' tableType=0: Present OMEGA and SIGMA as variance and covariances and display SE for THETA, OMEGA, SIGMA
+#'
 #' tableType=1: Present OMEGA and SIGMA as variance and covariances and display RSE for THETA, OMEGA, SIGMA
+#'
 #' tableType=2: Present OMEGA and SIGMA as standard-deviation and correlations and display RSE for THETA, OMEGA, SIGMA
+#'
 #' tableType=3: Present OMEGA and SIGMA as standard-deviation and correlations and display SE for THETA, OMEGA, SIGMA
 #' @param wide
 #' produce a wide 9-column table (wide=TRUE, default) or a thin 3-column table(wide=FALSE)
@@ -55,6 +59,11 @@ extToTable <- function(model,use.model.path=TRUE,tableType=2,wide=TRUE,format.es
     "Sigma.ID","Sigma.Est",paste("Sigma",rse.or.se,sep=".")
   )
 
+  note.text<-c("OMEGA","and","SIGMA","presented","as","variance","and","covariances","")
+  if(tableType %in% (2:3)){
+    note.text<-c("OMEGA","and","SIGMA","presented","as","standard","deviation","and","correlations")
+  }
+
   if(!wide){
 
     y<-rbind(
@@ -66,11 +75,17 @@ extToTable <- function(model,use.model.path=TRUE,tableType=2,wide=TRUE,format.es
     ii<-y[,1]!=""
     y<-y[ii,]
 
+    note.text<-matrix(note.text,ncol=3,byrow=T)
+
   }
   y<-gsub(" ","",y)
 
+  y<-rbind(y,note.text)
+  rownames(y)<-rep("",nrow(y))
+
   ## Set the name for the class
   class(y) <- append(class(y),"extToTable")
+
 
   y
 }
@@ -88,7 +103,14 @@ extToTable <- function(model,use.model.path=TRUE,tableType=2,wide=TRUE,format.es
 #' @keywords internal
 print.extToTable <- function(x,...){
   class(x)<-"matrix"
-  print(x,justify="right",quote=F)
+  ii<-1:(nrow(x)-1)
+  if(ncol(x)==3){
+    ii<-1:(nrow(x)-3)
+  }
+
+  print(x[ii,],justify="right",quote=F)
+  y<-t(x[-ii,])
+  cat(paste(y,collapse=" "),"\n")
 }
 
 ####################################################################################################
@@ -286,16 +308,22 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only,use.mode
 #' Load the covariance matrix from a nonmem .cov output file.
 #' Either the covariance matrix of all THETA parameters (default) or the covariance matrix of all parameters, THETA, OMEGA and SIGMA.
 #'
+#' For cov-files with multiple table results either only the last table result is loaded
+#' (last.table.only=TRUE, default) or all table results are loaded (last.table.only=FALSE).
+#' The result is then a named list of covariance matrix's,
+#' \code{LastTable} is the last table in the cov-files.
 #'
 #' @param model
 #' name of the cov file with or without the .cov extension. model may include full or relative path to the cov file. See examples.
 #' @param use.model.path
 #' Load file from a global defined model library (TRUE=default).
 #' If so will look for a global character vector named \code{model.path}
+#' @param last.table.only
+#' Include only the last table result for cov files with multiple table results
 #' @param theta.only
 #' return covariance matrix of theta's only (default)
 #' @return
-#' the covariance matrix
+#' The covariance matrix or a named list of covariance matrix's
 #' @export
 #' @importFrom utils read.table
 #'
@@ -305,36 +333,104 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only,use.mode
 #' file1 <- system.file("extdata", "run001.cov", package = "nonmem2R")
 #' # 2) Load the file using the covload function
 #' covload(file1)
-covload <- function(model,use.model.path=TRUE,theta.only=T){
+covload <- function (model, use.model.path = TRUE, last.table.only = TRUE,theta.only=TRUE)
+{
+  file.path <- ""
+  model.path.ok <- FALSE
 
   #### Check for global model.path
-  file.path<-""
-  model.path.ok<-FALSE
-  if(exists("model.path")){
-    eval(parse(text="model.path.ok<-dir.exists(model.path)"))
-    if(model.path.ok){
-      eval(parse(text="file.path<-model.path"))
+  if (exists("model.path")) {
+    eval(parse(text = "model.path.ok<-dir.exists(model.path)"))
+    if (model.path.ok) {
+      eval(parse(text = "file.path<-model.path"))
     }
   }
-
   ### Remove any extension; .ext, .cov, .lst, or .mod
-  if (substr(model, nchar(model) - 3, nchar(model)) %in% c(".ext",".cov",".lst",".mod")) {
+  if (substr(model, nchar(model) - 3, nchar(model)) %in% c(".ext",
+                                                           ".cov", ".lst", ".mod")) {
     model = substr(model, 1, nchar(model) - 4)
   }
+  tmp <- read.table(paste(file.path, model, ".cov", sep = ""),
+                    sep = "?", header = F, stringsAsFactors = FALSE)
+  skip.rows <- grep("TABLE", tmp[, 1])
+  n.rows <- c(skip.rows[-1], nrow(tmp)+1) - skip.rows-2
+  i <- length(skip.rows)
+  skip.rows
+  n.rows
 
-  cov<-read.table(file=paste(file.path,model,".cov",sep=""),skip=1,header=T)
-  if(theta.only){
+
+  cov <- covload.sub.table(model, skip.rows[i], n.rows[i],use.model.path = use.model.path,theta.only=theta.only)
+  ret<-cov
+
+  if (!last.table.only & length(skip.rows) > 1) {
+    ret<-NULL
+    for (i in 1:(length(skip.rows) - 1)) {
+      covi <- covload.sub.table(model, skip.rows[i], n.rows[i], use.model.path = use.model.path,theta.only=theta.only)
+      dim(covi)
+      eval(parse(text = paste("ret$table", i, "<-covi", sep = "")))
+    }
+    ret$LastTable<-cov
+  }
+  ret
+}
+
+####################################################################################################
+#' Internal package function
+#'
+#' @param model
+#' model
+#' @param skip
+#' number of rows to skip
+#' @param nrows
+#' number of rows to read
+#' @param use.model.path
+#' Load file from a global defined model library (TRUE=default).
+#' If so will look for a global character vector named \code{model.path}
+#' @param theta.only
+#' return covariance matrix of theta's only (default)
+#' @return
+#' Named list including theta, omega, sigma, and ofv. For MCMC output file each object are matrixes.
+#' @export
+#' @keywords internal
+#' @importFrom utils read.table
+covload.sub.table<-function (model, skip, nrow,use.model.path = TRUE,theta.only=TRUE)
+{
+  file.path <- ""
+  model.path.ok <- FALSE
+  if (exists("model.path")) {
+    eval(parse(text = "model.path.ok<-dir.exists(model.path)"))
+    if (model.path.ok) {
+      eval(parse(text = "file.path<-model.path"))
+    }
+  }
+  if (substr(model, nchar(model) - 3, nchar(model)) %in% c(".ext",
+                                                           ".cov", ".lst", ".mod")) {
+    model = substr(model, 1, nchar(model) - 4)
+  }
+  cov <- read.table(file = paste(file.path, model, ".cov",
+                                 sep = ""), skip = skip, nrows=nrow,header = T)
+
+  cov
+
+
+  if (theta.only) {
     ii <- grep("THETA", cov$NAME)
     jj <- grep("THETA", colnames(cov))
   }
-  else{
-    ii <- c(grep("THETA", cov$NAME),grep("OMEGA", cov$NAME),grep("SIGMA", cov$NAME))
-    jj <- c(grep("THETA", colnames(cov)),grep("OMEGA", colnames(cov)),grep("SIGMA", colnames(cov)))
+  else {
+    ii <- c(grep("THETA", cov$NAME), grep("OMEGA", cov$NAME),
+            grep("SIGMA", cov$NAME))
+    jj <- c(grep("THETA", colnames(cov)), grep("OMEGA", colnames(cov)),
+            grep("SIGMA", colnames(cov)))
   }
-
-	theta.cov<-t(cov[ii,jj])
-	theta.cov
+  theta.cov <- t(cov[ii, jj])
+  colnames(theta.cov)<-rownames(theta.cov)
+  theta.cov
 }
+
+
+
+
 
 ####################################################################################################
 #' Compile summary information of for NONMEM model based on the lst file, ext file, and the cov file.
