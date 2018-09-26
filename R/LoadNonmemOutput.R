@@ -1,4 +1,71 @@
 ####################################################
+#' Show model file
+#'
+#' @description
+#' Load and dump model file in the consol.
+#'
+#' @param model
+#' name of the mod file with or without the .mod extension.
+#' model may include full or relative path to the mod file. See examples.
+#' @param use.model.path
+#' Load file from a global defined model library (TRUE=default).
+#' If so will look for a global character vector named \code{model.path}
+#'
+#' @return
+#' data.frame
+#' @export
+#'
+#' @examples
+#' ##### Load the .ext file "run001.mod"
+#' # 1) Get path to the example file included in nonmem2R package
+#' file1 <- system.file("extdata", "run001.mod", package = "nonmem2R")
+#' # 2) Load the file using the extload function
+#' modload(file1)
+#'
+modload <- function(model,use.model.path=TRUE) {
+
+  #### Check for global model.path
+  file.path<-""
+  model.path.ok<-FALSE
+  if(use.model.path & exists("model.path")){
+    eval(parse(text="model.path.ok<-dir.exists(model.path)"))
+    if(model.path.ok){
+      eval(parse(text="file.path<-model.path"))
+    }
+  }
+
+  ### Remove any extension; .ext, .cov, .lst, or .mod
+  if (substr(model, nchar(model) - 3, nchar(model)) %in% c(".ext",".cov",".lst",".mod")) {
+    model = substr(model, 1, nchar(model) - 4)
+  }
+
+  dd<-data.frame(X=scan(file=paste(model,".mod",sep=""),what=character(),sep="\n",quiet = TRUE))
+  colnames(dd)<-"Code"
+
+  ## Set the name for the class
+  #class(dd) <- append(class(dd),"modload")
+  class(dd) <- append("modload",class(dd))
+
+  dd
+}
+####################################################################################################
+#' Print function for loaded mod file
+#'
+#' @description
+#' Print function for loaded mod file class modload
+#' @param x
+#' a object af class modload.
+#' @param ...
+#' further arguments to be passed to or from methods.
+#' @method print modload
+#' @export
+#' @keywords internal
+print.modload <- function(x,...){
+  class(x)<-"data.frame"
+  print.data.frame(x,right=FALSE,row.names = FALSE)
+}
+
+####################################################
 #' Compile parameter table suitable for reports
 #'
 #' @description
@@ -433,7 +500,7 @@ covload.sub.table<-function (model, skip, nrow,use.model.path = TRUE,theta.only=
 
 
 ####################################################################################################
-#' Compile summary information of for NONMEM model based on the lst file, ext file, and the cov file.
+#' Compile summary information for NONMEM model based on the lst file, ext file, and the cov file.
 #'
 #' @description
 #' Compile summary information similar to that of the sumo PSN function, based on the NONMEM output files

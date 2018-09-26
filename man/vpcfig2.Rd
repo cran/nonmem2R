@@ -59,8 +59,14 @@ should be vector of length 3, default=c("steelblue", "gray50", "steelblue")}
 
 \item{alpha.segm}{alpha of CI regions (low, median and high) for model, passed to geom_polygon, default=0.6}
 
-\item{type}{type of VPC plot, 1=display model regions only, 2=as 1 + lines (low, median and high) of data,
+\item{type}{type of VPC plot:
+
+1=display model regions only,
+
+2=as 1 + lines (low, median and high) of data,
+
 3= as 2 + points for data.
+
 type=0 can also be used and then no graph is produced but instead a list with 2 dataframes is returned.
 one for the vpcresult and on for the observed data in the vpctab file.}
 }
@@ -105,14 +111,12 @@ adding/changing labels & titles;
 \code{vpcfig2(...)+labs(y="Modified y-label", title="New title")}.
 
 \strong{Axis-limits} are preferably set using the ggplot2 function
-\code{coord_cartesian(...)}. This way data points outside the axis-limit are only hidden when
-plotting. Setting axis-limits using e.g. \code{scale_x_continuous}, \code{scale_x_log10}, or
-\code{xlim} may produce
-an incorrect vpcplot.
-This because data outside the axis-limits is deleted before plotting.
+\code{coord_cartesian(...)}. This way data points outside the axis-limit are only hidden when plotting.
 
 \strong{Stratified} VPC's are created with \code{facet_wrap(~strata)} as deafult but can be
 modified to use \code{facet_grid} for setting the panel grid.
+
+However faceting must be done with \code{~strata}.
 
 See examples below and documentation for ggplot2 for further details.
 }

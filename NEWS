@@ -1,3 +1,24 @@
+nonmem2R v0.1.10 (Release date: 2018-09-26)
+==============
+
+
+Changes:
+
+* Added vpcfig3 for creating multiple VPC plots from one single PSN vpc output file
+
+* Added modload for loading model file and print on screen
+
+* Added stat_QQnorm for Quantile-Quantile plots with ggplot2
+
+* Added stat_QQCL for confidence intervals for Quantile-Quantile plots with ggplot2
+
+* Updated vpgfig2; now using geom_ribbon (instead of geom_polygon) for drawing model confidence intervals.
+  This means x-axis limits can be set by e.g. xlim or scale_x_continuous.
+  (Previous version using geom_polygon required using coord_cartesian for setting
+  axis limits to avoid a corrupted VPC.)
+
+
+
 nonmem2R v0.1.9 (Release date: 2018-04-06)
 ==============
 
@@ -12,3 +33,4 @@ Changes:
 * Fixed column names for covload output
 
 * Updated help-page for vpcfig2 with advice for setting axis limits
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/LoadNonmemOutput.R
 \name{sumoR}
 \alias{sumoR}
-\title{Compile summary information of for NONMEM model based on the lst file, ext file, and the cov file.}
+\title{Compile summary information for NONMEM model based on the lst file, ext file, and the cov file.}
 \usage{
 sumoR(model, use.model.path = TRUE, tableType = 2,
   format.estimate = "\% -#6.4g", format.rse = "\%#6.3g")
