@@ -201,10 +201,11 @@ readVpc<-function (vpc.results = NULL, npc.results = NULL, verbose = FALSE,...)
                 comment.char = "", header = T, strip.white = TRUE,
                 blank.lines.skip = FALSE)
 			####
-read.table(filename, skip = table.head[i] -
-                1, nrows = table.rows.to.read[i], sep = ",",
-                comment.char = "", header = T, strip.white = TRUE,
-                blank.lines.skip = FALSE)[,1:5]
+			#AAAA<-read.table(filename, skip = table.head[i] -
+            #    1, nrows = table.rows.to.read[i], sep = ",",
+            #    comment.char = "", header = T, strip.white = TRUE,
+            #    blank.lines.skip = FALSE)[,1:5]
+			#print(AAAA)	
 			####
         }
         if (length(tmp.interval) != 0) {
@@ -242,6 +243,8 @@ read.table(filename, skip = table.head[i] -
         tmp.names <- gsub("\\.+", "\\.", tmp.names)
         tmp.names <- gsub("\\.$", "", tmp.names)
         names(tmp.table) <- tmp.names
+		###print(tmp.names) ->  "lower"               "upper"               "nobs"                "no.of.obs"
+		###print(tmp.table) : third column (nobs) is mean of idv
         if (num.tables == 1) {
             bin.table <- tmp.table
         }

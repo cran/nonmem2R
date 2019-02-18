@@ -4,7 +4,7 @@
 \name{StatQQVPC}
 \alias{StatQQVPC}
 \title{ggproto for stat_QQVPC}
-\format{An object of class \code{StatQQVPC} (inherits from \code{Stat}, \code{ggproto}) of length 3.}
+\format{An object of class \code{StatQQVPC} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
 \usage{
 StatQQVPC
 }

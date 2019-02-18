@@ -198,6 +198,104 @@ stat_QQVPC <- function(mapping = NULL, data = NULL, geom = "ribbon",
   )
 }
 
+
+####################################################
+#' ggproto for stat_QQrefline
+#'
+#' @description
+#' ggproto for stat_QQrefline doing Reference line in Quantile-Quantile Plots with ggplot2
+#'
+#' @param mapping
+#' Set of aesthetic mappings created by aes or aes_.
+#' @param data
+#' The data to be displayed in this layer.
+#' @param geom
+#' Use to override the default geom
+#' @param position
+#' Position adjustment, either as a string, or the result of a call to a position adjustment function.
+#' @param na.rm
+#' #' If FALSE, the default, missing values are removed with a warning. If TRUE, missing values are silently removed.
+#' @param show.legend
+#' logical. Should this layer be included in the legends? NA, the default, includes if any aesthetics are mapped. FALSE never includes, and TRUE always includes.
+#' @param inherit.aes
+#' If FALSE, overrides the default aesthetics, rather than combining with them.
+#' @param ...
+#' other arguments passed on to layer.
+#' @details
+#' internal package function
+#' @export
+#' @keywords internal
+StatQQrefline <- ggproto("StatQQrefline", Stat,
+                      compute_group = function(data, scales) {
+                        p<-(data$x[!is.na(data$x)])
+                        mx<-mean(p)
+						sx<-sd(p)
+                        n<-length(p)
+						xx<-qnorm(seq(0.5/n,1-0.5/n,length=n))
+						data.frame(x=xx,y=xx*sx+mx)
+                      },
+                      required_aes = c("x")
+)
+
+####################################################
+#' Add reference line to Quantile-Quantile Plots
+#'
+#' @description
+#' Refline for Quantile-Quantile Plots with ggplot2
+#'
+#' @param mapping
+#' Set of aesthetic mappings created by aes or aes_.
+#' @param data
+#' The data to be displayed in this layer.
+#' @param geom
+#' Use to override the default geom
+#' @param position
+#' Position adjustment, either as a string, or the result of a call to a position adjustment function.
+#' @param na.rm
+#' If FALSE, the default, missing values are removed with a warning. If TRUE, missing values are silently removed.
+#' @param show.legend
+#' logical. Should this layer be included in the legends? NA, the default, includes if any aesthetics are mapped. FALSE never includes, and TRUE always includes.
+#' @param inherit.aes
+#' If FALSE, overrides the default aesthetics, rather than combining with them.
+#' @param ...
+#' other arguments passed on to layer.
+#' @details
+#' Provide reference line for normal QQplot
+#' @section Aesthetics:
+#' geom_smooth understands the following aesthetics (required aesthetics are in bold):\cr
+#' \bold{x}, alpha, colour, fill, group, shape, size, stroke
+#'
+#' @export
+#' @importFrom ggplot2 layer
+#' @examples
+#' dd<-data.frame(gr=c(rep("A",20),rep("B",40)))
+#' dd$dv<-2*(dd$gr=="B")+rnorm(nrow(dd))/(1+2*(dd$gr=="A"))
+#' dd<-dd[order(dd$gr,dd$dv),]
+#' dd$px<-NA
+#' for(gri in levels(dd$gr)){
+#'   dd$px[dd$gr==gri]<-qqnorm(dd$dv[dd$gr==gri],plot=FALSE)$x
+#' }
+
+#' ggplot(dd, aes(dv)) +
+#'   stat_QQnorm()+
+#'	 stat_QQrefline()
+#'   facet_wrap(~gr)
+#' \dontrun{
+#' ggplot(dd, aes(dv,color=factor(gr))) +
+#'   stat_QQnorm()
+#'	 stat_QQrefline()
+#'   }
+stat_QQrefline <- function(mapping = NULL, data = NULL, geom = "line",
+                        position = "identity", na.rm = FALSE, show.legend = NA,
+                        inherit.aes = TRUE, ...) {
+  layer(
+    stat = StatQQrefline, data = data, mapping = mapping, geom = geom,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, ...)
+  )
+}
+
+
 #dd<-data.frame(gr=c(rep("A",20),rep("B",40)))
 #dd$dv<-2*(dd$gr=="B")+rnorm(nrow(dd))/(1+2*(dd$gr=="A"))
 #dd<-dd[order(dd$gr,dd$dv),]

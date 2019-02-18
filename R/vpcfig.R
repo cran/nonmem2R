@@ -140,6 +140,7 @@ vpcfig<-function(vpcdir=NULL,
   }
   if(is.null(vpctab)){
     vpctab<-list.files(path=paste(file.path,vpcdir,sep=""),pattern="vpctab",full.names=TRUE)
+	vpctab<-setdiff(vpctab,vpctab[grep("old",substr(vpctab,nchar(vpctab)-4,nchar(vpctab)))])
     if(length(vpctab)==0){
       if(file.path!=""){
         warning(paste("No vpctab file found in folder",paste(file.path,vpcdir,sep=""),". Trying without using the specified model.path"))
@@ -153,6 +154,7 @@ vpcfig<-function(vpcdir=NULL,
   }
   if(is.null(vpcresult)){
     vpcresult<-paste(file.path,vpcdir,"/vpc_results.csv",sep="")
+	vpcresult<-setdiff(vpcresult,vpcresult[grep("old",substr(vpcresult,nchar(vpcresult)-4,nchar(vpcresult)))])
   }
 
   if(!file.exists(vpctab) | !file.exists(vpcresult)){

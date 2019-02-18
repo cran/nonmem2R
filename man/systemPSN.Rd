@@ -4,7 +4,8 @@
 \alias{systemPSN}
 \title{Run qpsn system call}
 \usage{
-systemPSN(cmd, use.model.path = TRUE, ...)
+systemPSN(cmd, use.model.path = TRUE, ml = "ml psn nonmem-standard",
+  ...)
 }
 \arguments{
 \item{cmd}{qpsn cmd}
@@ -13,6 +14,8 @@ systemPSN(cmd, use.model.path = TRUE, ...)
 If so will look for a global character vector named \code{model.path} and
 run the system cmd the folder path as specified in \code{model.path}.}
 
+\item{ml}{String for what module to load}
+
 \item{...}{Further arguments}
 }
 \description{
@@ -20,9 +23,9 @@ Run qpsn system call on system where psn is available.
 If psn is not available system{base} is used.
 }
 \examples{
-# (if the platform has who)
-try(systemPSN("who", intern = TRUE))
+# List files in working directory
+try(systemPSN("ls -l"))
 
-try(systemPSN("ls fizzlipuzzli", intern = TRUE, ignore.stderr = TRUE))
-# zero-length result since file does not exist, and will give warning.
+# List file in working directory indluding sun-directories
+try(systemPSN("ls * -l"))
 }

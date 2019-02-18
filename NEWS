@@ -1,3 +1,41 @@
+nonmem2R v0.2.1 (Release date: 2019-02-18)
+==============
+
+NEW functions:
+
+*  A set of function for goodness-of-fit (GOF) have been added. Targeting nonmem output tables
+  ( sdtab,cotab,catab..) to provide basic GOF plots for observations vs population and individual
+  predictions, residuals (CWRES), ETA's, numerical and categorical covariates.
+  See the vignette "GOFvignette"
+
+  The functions have e.g. functionality for adding caption which also have been added to vpcfig2
+  and vpcfig3.
+
+Changes:
+* Using global package variable to specify the model folder  instead of looking for the variable
+  "model.path" holding the path to model files, the function set.model.path is used set the folder path.
+
+* vpcfig2: Added parameter param bin.idv to either use median of independent variable on
+  x-axis (default), or to use midpoint of bins on x-axis.
+
+* vpcfig2: Added argument median.only to only display median (median.only=TRUE) or display
+  both quantile (e.g. 5 and 95%) and median (median.only=FALSE, this is the default)
+
+* vpcfig3: Added ... parameter to vpcfig3 that are passed to loess.smooth
+
+* Update of systemNM for SCP
+
+* Bug fix for modload. Previuous version did not run when using model.path.
+
+* Fixed issue for vpc folders with multiple vpc_results and vpctab files (e.g. vpc_results-old1,
+  vpctab-old1). Now only filesnames NOT containing  "old" are loaded.
+
+
+To-do:
+
+* Handling of LOQ data in vpcfig2
+
+
 nonmem2R v0.1.10 (Release date: 2018-09-26)
 ==============
 
