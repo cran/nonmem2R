@@ -7,9 +7,9 @@
 \title{Histogram and/or QQ-norm GOF for ETA's}
 \usage{
 basic.eta.GOF(data, title = "", global.ggplot.options = NULL,
-  type = c("both", "qqnorm", "hist"), refline = TRUE,
-  drop.fixed = TRUE, id.column = "ID", standardize = TRUE,
-  bins = NA, control = GOF.control())
+  type = c("both", "qqnorm", "hist"), ETA.subset = NULL,
+  refline = TRUE, drop.fixed = TRUE, id.column = "ID",
+  standardize = TRUE, bins = NA, control = GOF.control())
 
 eta.hist.GOF(data, title = "", drop.fixed = TRUE, refline = TRUE,
   id.column = "ID", standardize = TRUE, bins = NA,
@@ -26,6 +26,8 @@ eta.qqnorm.GOF(data, title = "", drop.fixed = TRUE, refline = TRUE,
 \item{global.ggplot.options}{ggplot option added to  each ggplot before plotting/returning object}
 
 \item{type}{do only qq-norm plots (qqnorm), only histograms (hist), or do both (both)}
+
+\item{ETA.subset}{index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.}
 
 \item{refline}{add reference line (default =TRUE) or not (FALSE)}
 

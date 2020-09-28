@@ -685,6 +685,8 @@ basic.GOF6<-function(data,residual="CWRES",idv1="IPRED",idv2="TIME",title="",col
 #' ggplot option added to  each ggplot before plotting/returning object
 #' @param type
 #' do only qq-norm plots (qqnorm), only histograms (hist), or do both (both)
+#' @param ETA.subset
+#' index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.
 #' @param refline
 #' add reference line (default =TRUE) or not (FALSE)
 #' @param drop.fixed
@@ -706,12 +708,16 @@ basic.GOF6<-function(data,residual="CWRES",idv1="IPRED",idv2="TIME",title="",col
 #' @export
 #' @importFrom ggplot2 ggplot
 #' @importFrom reshape2 melt
-basic.eta.GOF<-function(data,title="",global.ggplot.options=NULL,type=c("both","qqnorm","hist"),refline=TRUE,drop.fixed=TRUE,id.column="ID",standardize=TRUE,bins=NA,control=GOF.control()){
+basic.eta.GOF<-function(data,title="",global.ggplot.options=NULL,type=c("both","qqnorm","hist"),
+                        ETA.subset=NULL,refline=TRUE,drop.fixed=TRUE,id.column="ID",standardize=TRUE,bins=NA,control=GOF.control()){
 	data<-data[!duplicated(data[,id.column]),]
 	if(is.na(bins)){
 		bins=ceiling(1+log2(nrow(data)))
 	}
 	ii<-which(colnames(data) %in% c(paste("ETA",1:9,sep=""),paste("ET",10:99,sep="")))
+	if(!(is.null(ETA.subset))){
+	  ii<-which(colnames(data) %in% c(paste("ETA",ETA.subset,sep=""),paste("ET",ETA.subset,sep="")))
+	}
 	if(length(ii)==0){
 		stop("No ETA's found. Input data must have at least one column named ETA1,ETA2,..")
 	}
@@ -719,7 +725,12 @@ basic.eta.GOF<-function(data,title="",global.ggplot.options=NULL,type=c("both","
 	eta.labels<-control$eta.labels
 	kk<-(1:length(ii))
 	if(length(eta.labels)>0){
-		eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  if(is.null(ETA.subset)){
+		  eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  }
+	  else{
+	    eta.labels<-c(eta.labels,rep("",999))[sort(ETA.subset)][1:length(ii)]
+	  }
 	}
 
 	if(drop.fixed){
@@ -803,6 +814,8 @@ eta.qqnorm.GOF<-function(data,title="",drop.fixed=TRUE,refline=TRUE,id.column="I
 #' data.frame to plot
 #' @param covariates
 #' covariates, list of character strings
+#' @param ETA.subset
+#' index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.
 #' @param title
 #' title
 #' @param drop.fixed
@@ -832,7 +845,7 @@ eta.qqnorm.GOF<-function(data,title="",drop.fixed=TRUE,refline=TRUE,id.column="I
 #' @importFrom ggplot2 coord_flip
 #' @importFrom ggplot2 geom_density_2d
 #' @importFrom reshape2 melt
-eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),title="",drop.fixed=TRUE,id.column="ID",
+eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,title="",drop.fixed=TRUE,id.column="ID",
 	standardize=TRUE,refline=TRUE,type=c("all-in-one","covariate-by-page","eta-by-page"),
 	layout=c("ETAbyROW","ETAbyCOL"),add.loess=TRUE,control=GOF.control()){
 
@@ -852,6 +865,9 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),title="",drop.fixed=TRUE,id
 
 
 	ii<-which(colnames(data) %in% c(paste("ETA",1:9,sep=""),paste("ET",10:99,sep="")))
+	if(!(is.null(ETA.subset))){
+	  ii<-which(colnames(data) %in% c(paste("ETA",ETA.subset,sep=""),paste("ET",ETA.subset,sep="")))
+	}
 	if(length(ii)==0){
 		stop("No ETA's found in data")
 	}
@@ -859,7 +875,12 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),title="",drop.fixed=TRUE,id
 	eta.labels<-control$eta.labels
 	kk<-(1:length(ii))
 	if(length(eta.labels)>0){
-		eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  if(is.null(ETA.subset)){
+	    eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  }
+	  else{
+	    eta.labels<-c(eta.labels,rep("",999))[sort(ETA.subset)][1:length(ii)]
+	  }
 	}
 	if(drop.fixed){
 		if(length(ii)>1){
@@ -953,7 +974,7 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),title="",drop.fixed=TRUE,id
 #' set.script.name("MyScript.R")
 #' eta.cat.GOF(sdtab,covariates=c("SEXM"))
 #' @export
-eta.cat.GOF<-function(data,covariates=c("SEXM"),title="",drop.fixed=TRUE,id.column="ID",
+eta.cat.GOF<-function(data,covariates=c("SEXM"),ETA.subset=NULL,title="",drop.fixed=TRUE,id.column="ID",
 	standardize=TRUE,refline=TRUE,type=c("all-in-one","covariate-by-page","eta-by-page"),
 	layout=c("ETAbyROW","ETAbyCOL"),add.points=TRUE,control=GOF.control()){
 
@@ -972,6 +993,9 @@ eta.cat.GOF<-function(data,covariates=c("SEXM"),title="",drop.fixed=TRUE,id.colu
 
 
 	ii<-which(colnames(data) %in% c(paste("ETA",1:9,sep=""),paste("ET",10:99,sep="")))
+	if(!(is.null(ETA.subset))){
+	  ii<-which(colnames(data) %in% c(paste("ETA",ETA.subset,sep=""),paste("ET",ETA.subset,sep="")))
+	}
 	if(length(ii)==0){
 		stop("No ETA's found in data")
 	}
@@ -979,7 +1003,12 @@ eta.cat.GOF<-function(data,covariates=c("SEXM"),title="",drop.fixed=TRUE,id.colu
 	eta.labels<-control$eta.labels
 	kk<-(1:length(ii))
 	if(length(eta.labels)>0){
-		eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  if(is.null(ETA.subset)){
+	    eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  }
+	  else{
+	    eta.labels<-c(eta.labels,rep("",999))[sort(ETA.subset)][1:length(ii)]
+	  }
 	}
 
 	if(drop.fixed){
@@ -1086,7 +1115,7 @@ eta.cat.GOF<-function(data,covariates=c("SEXM"),title="",drop.fixed=TRUE,id.colu
 #' set.script.name("MyScript.R")
 #' eta.pairs.GOF(sdtab)
 #' @export
-eta.pairs.GOF<-function(data,title="",drop.fixed=TRUE,id.column="ID",
+eta.pairs.GOF<-function(data,ETA.subset=NULL,title="",drop.fixed=TRUE,id.column="ID",
 	density2D=c("none","upper","lower"),
 	standardize=TRUE,control=GOF.control()){
 
@@ -1097,6 +1126,10 @@ eta.pairs.GOF<-function(data,title="",drop.fixed=TRUE,id.column="ID",
 	value1<-value2<-id1<-id2<-NULL
 
 	ii<-which(colnames(data) %in% c(paste("ETA",1:9,sep=""),paste("ET",10:99,sep="")))
+	if(!(is.null(ETA.subset))){
+	  ii<-which(colnames(data) %in% c(paste("ETA",ETA.subset,sep=""),paste("ET",ETA.subset,sep="")))
+	}
+
 	if(length(ii)==0){
 		stop("No ETA's found. Input data must have at least one column named ETA1,ETA2,..")
 	}
@@ -1104,7 +1137,12 @@ eta.pairs.GOF<-function(data,title="",drop.fixed=TRUE,id.column="ID",
 	eta.labels<-control$eta.labels
 	kk<-(1:length(ii))
 	if(length(eta.labels)>0){
-		eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  if(is.null(ETA.subset)){
+	    eta.labels<-c(eta.labels,rep("",999))[1:length(ii)]
+	  }
+	  else{
+	    eta.labels<-c(eta.labels,rep("",999))[sort(ETA.subset)][1:length(ii)]
+	  }
 	}
 	if(drop.fixed){
 		if(length(ii)==1){

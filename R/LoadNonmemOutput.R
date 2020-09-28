@@ -239,7 +239,8 @@ extload <- function(model,use.model.path=TRUE,positive.iterations.only=TRUE,last
 	## First check number of TABLE in the ext file
 	tmp<-read.table(paste(file.path,model,".ext",sep=""),sep="?",header=F,stringsAsFactors = FALSE)
 	skip.rows<-grep("TABLE",tmp[,1])
-	n.rows<-c(skip.rows[-1],nrow(tmp))-skip.rows-2
+	n.rows<-c(skip.rows[-1],nrow(tmp))-skip.rows-1 ## Change 2019-06-27 skip.rows-2 -> skip.rows-1
+
 
 	###First do last table
 	i<-	length(skip.rows)
@@ -292,6 +293,7 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only,use.mode
 	### Check for type based on name of last column
 	last.col<-colnames(ext)[ncol(ext)]
 	type<-match(last.col,c("OBJ","SAEMOBJ","MCMCOBJ"))
+	#print(type)
 	if(is.na(type)){
 			cat("Unknown nonmem table type:",last.col,"\n")
 			cat("Returning empty list\n")
@@ -310,7 +312,13 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only,use.mode
 			  theta.sd<-t(ext[iii,jtheta])[,1]
 			}
       fixed<-colnames(ext)[which(apply(ext[ext$ITERATION>0,],2,sd)==0)]
-
+      ## New code 2019-06-27
+      iiii<-which(ext$ITERATION== -1000000006)
+      #print(ext$ITERATION)
+      if(any(iiii)){
+        fixed<-colnames(ext)[which(ext[iiii,]==1)]
+      }
+      ## end new code
 			omegaV<-t(ext[ii,jomega])[,1]
 			omega.SD1<-rep(NA,length=length(omegaV))
 			if(any(iii)){
@@ -362,6 +370,13 @@ extload.sub.table <- function(model,skip,nrows,positive.iterations.only,use.mode
 			sigma<-ext[ii,jsigma]
 
 			fixed<-colnames(ext)[which(apply(ext[ii,],2,sd)==0)]
+			## New code 2019-06-27
+			iiii<-which(ext$ITERATION== -1000000006)
+			#print(ext$ITERATION)
+			if(any(iiii)){
+			  fixed<-colnames(ext)[which(ext[iiii,]==1)]
+			}
+			## end new code
 
 			ret<-list(theta=theta,omega=omega,sigma=sigma,fix=fixed)
 		}

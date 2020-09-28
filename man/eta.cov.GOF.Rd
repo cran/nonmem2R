@@ -6,26 +6,28 @@
 \alias{eta.pairs.GOF}
 \title{Covariate and pairs ETA GOFs}
 \usage{
-eta.cov.GOF(data, covariates = c("AGE", "BWT"), title = "",
-  drop.fixed = TRUE, id.column = "ID", standardize = TRUE,
-  refline = TRUE, type = c("all-in-one", "covariate-by-page",
-  "eta-by-page"), layout = c("ETAbyROW", "ETAbyCOL"), add.loess = TRUE,
-  control = GOF.control())
+eta.cov.GOF(data, covariates = c("AGE", "BWT"), ETA.subset = NULL,
+  title = "", drop.fixed = TRUE, id.column = "ID",
+  standardize = TRUE, refline = TRUE, type = c("all-in-one",
+  "covariate-by-page", "eta-by-page"), layout = c("ETAbyROW",
+  "ETAbyCOL"), add.loess = TRUE, control = GOF.control())
 
-eta.cat.GOF(data, covariates = c("SEXM"), title = "",
-  drop.fixed = TRUE, id.column = "ID", standardize = TRUE,
-  refline = TRUE, type = c("all-in-one", "covariate-by-page",
-  "eta-by-page"), layout = c("ETAbyROW", "ETAbyCOL"),
-  add.points = TRUE, control = GOF.control())
+eta.cat.GOF(data, covariates = c("SEXM"), ETA.subset = NULL,
+  title = "", drop.fixed = TRUE, id.column = "ID",
+  standardize = TRUE, refline = TRUE, type = c("all-in-one",
+  "covariate-by-page", "eta-by-page"), layout = c("ETAbyROW",
+  "ETAbyCOL"), add.points = TRUE, control = GOF.control())
 
-eta.pairs.GOF(data, title = "", drop.fixed = TRUE, id.column = "ID",
-  density2D = c("none", "upper", "lower"), standardize = TRUE,
-  control = GOF.control())
+eta.pairs.GOF(data, ETA.subset = NULL, title = "", drop.fixed = TRUE,
+  id.column = "ID", density2D = c("none", "upper", "lower"),
+  standardize = TRUE, control = GOF.control())
 }
 \arguments{
 \item{data}{data.frame to plot}
 
 \item{covariates}{covariates, list of character strings}
+
+\item{ETA.subset}{index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.}
 
 \item{title}{title}
 

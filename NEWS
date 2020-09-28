@@ -1,3 +1,18 @@
+nonmem2R v0.2.2 (Release date: 2020-09-26)
+==============
+
+Changes:
+* vpcfig2 now plot VPC's for percent data below lloq and or above uloq.
+
+* Added vignette "VPCvignette" with examples and tips how to use vpcfig2
+
+* Fixed bug in extload.sub.table. Fixed parameters were not correctly identified for
+  Importance Sampling estimation cases.
+  Issue now resolved with fixed based on ITERATION=-1000000006 row in ext table, 1 indicate FIX
+
+* Added option for ETA GOFs to show subset of ETA's
+
+
 nonmem2R v0.2.1 (Release date: 2019-02-18)
 ==============
 
@@ -32,8 +47,6 @@ Changes:
 
 
 To-do:
-
-* Handling of LOQ data in vpcfig2
 
 
 nonmem2R v0.1.10 (Release date: 2018-09-26)

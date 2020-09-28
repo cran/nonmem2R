@@ -64,6 +64,8 @@ nonmem2R.globals$dictionary<-list(
   IPRED ="Individual predictions",
   CWRES ="Cond. weighted res",
   IWRES ="Ind. weighted res",
+  WRES  ="Weighted residual",
+  RES   ="Residual",
   TIME  ="Time after first dose(h)",
   TAPD  ="Time since last dose(h)",
   TAD   ="Time since last dose(h)",
