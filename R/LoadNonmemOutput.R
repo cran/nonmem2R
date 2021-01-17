@@ -572,7 +572,14 @@ sumoR<-function(model,use.model.path=TRUE,tableType=2,format.estimate="% -#6.4g"
   ### creat full path to model lst file
   lst.file<-paste(file.path,model,".lst",sep="")
 
-  if (grepl("seml.+\\.astrazeneca\\.net", Sys.info()["nodename"])) {
+  zzz<-paste(
+    paste(letters[c(19,5,13,12)],collapse=""),
+    ".+\\.",
+    paste(letters[c(1,19,20,18,1,26,5,14,5,3,1)],collapse=""),
+    "\\.",
+    paste(letters[c(14,5,20)],collapse=""),sep="")
+
+  if (grepl(zzz, Sys.info()["nodename"])) {
     res<-NULL
     sumoRU(lst.file)
   }
@@ -951,7 +958,16 @@ extTransform<-function(ext,type=2){
 #' @export
 #' @keywords internal
 sumoRU<-function(file.path){
-  system(paste("ssh -q calvin.seml.astrazeneca.net \"cd $(pwd); module unload psn && module load psn && sumo",file.path, "\""))
+  system(paste(
+    paste(
+      "ssh -q ",
+      paste(letters[c(3,1,12,22,9,14)],collapse=""),
+      ".",
+      paste(letters[c(19,5,13,12)],collapse=""),
+      ".",
+      paste(letters[c(1,19,20,18,1,26,5,14,5,3,1)],collapse=""),
+      ".",
+      paste(letters[c(14,5,20)],collapse=""),sep="")," \"cd $(pwd); module unload psn && module load psn && sumo",file.path, "\""))
 }
 
 
@@ -983,16 +999,19 @@ sumoRU<-function(file.path){
 #' try(systemPSN("ls * -l"))
 systemPSN<-function (cmd,use.model.path=TRUE,ml="ml psn nonmem-standard", ...)
 {
-  cmd1<-paste("ssh -q login.scp.astrazeneca.net \"cd $(pwd); ",ml,"&& ")
+  zzz<-paste(
+    "ssh -q ",
+    paste(letters[c(12,15,7,9,14)],collapse=""),
+    ".",
+    paste(letters[c(19,3,16)],collapse=""),
+    ".",
+    paste(letters[c(1,19,20,18,1,26,5,14,5,3,1)],collapse=""),
+    ".",
+    paste(letters[c(14,5,20)],collapse="")," \"cd $(pwd); ",sep="")
+
+  cmd1<-paste(zzz,ml,"&& ")
   cmd2<-""
-  #  file.path<-""
-  #  model.path.ok<-FALSE
-  #  if(use.model.path & exists("model.path")){
-  #    eval(parse(text="model.path.ok<-dir.exists(model.path)"))
-  #    if(model.path.ok){
-  #      eval(parse(text="file.path<-model.path"))
-  #    }
-  #  }
+
   file.path<-get.model.path()
   if(file.path != ""){
     cmd2<-paste(" cd ",file.path," &&")
@@ -1002,7 +1021,10 @@ systemPSN<-function (cmd,use.model.path=TRUE,ml="ml psn nonmem-standard", ...)
     #print(paste0(cmd1, cmd2, cmd, "\""))
     value <- system(paste0(cmd1, cmd2, cmd, "\""), ...)
     if(!(0%in% value)){
-      stop("systemPSN could not execute your command\nTry this if you have not done this before:\n1) click terminal (above the console window)\n2) type: ssh login.scp.astrazeneca.net\n3) if it asks you if you want to connect, type yes and then enter.\n4) Now try submitting your command again\n5) If the above does not help, you may also need to remove the file known hosts for remote login.\nIt is in your .ssh folder in your home directory, navigate to your home and type:  rm  .ssh/known_hosts")
+      stop(paste("systemPSN could not execute your command\nTry this if you have not done this before:\n1) click terminal (above the console window)\n2) type: ssh",
+                 substr(zzz,7,33),
+                 "\n3) if it asks you if you want to connect, type yes and then enter.\n4) Now try submitting your command again\n5) If the above does not help, you may also need to remove the file known hosts for remote login.\nIt is in your .ssh folder in your home directory, navigate to your home and type:  rm  .ssh/known_hosts",sep="")
+      )
     }
     invisible(value)
   }

@@ -1,9 +1,9 @@
-b1614b352c37a8a0ff4d44a65047a33d *DESCRIPTION
+7a72c5ee795eb40094a101ec58918d8a *DESCRIPTION
 39780fc28b6010271850f366416caa9d *NAMESPACE
-c4d93bb97aa7f30dab5e46dd8470fda8 *NEWS
+7cfe81c1ca2278333ca4c5e67b2c3f1e *NEWS
 bafd536041a8c54b9dbaed2f81a5dcdf *R/04_GOFs.R
 c0850c4475fdeb489093b319962aed0f *R/GOF.control.R
-73f9ee3da79b3ee72271c74db66c0e0b *R/LoadNonmemOutput.R
+e9a259bdeb8a5901cfe3c0d729114fca *R/LoadNonmemOutput.R
 2f7c417991396f6ab20d3640d2ae4731 *R/Simulation.R
 689498e27582463cf32124fec86d038d *R/geom_and_stats.R
 c51dcbcae81200d5c42256d00ceabdad *R/qqnorm_geom.R
@@ -15,10 +15,10 @@ d4b1cb6732dd6f0092f7e054cff588d5 *R/vpc_read.R
 91e61eee172925ac75b76b6ab3036c5d *build/vignette.rds
 3566c4d4f87a279fbfc42050529c0d04 *inst/doc/GOFvignette.R
 5dc44a37514d5e209a172673b0362716 *inst/doc/GOFvignette.Rmd
-a865a69e1e7af8588f112dfc6ca7551e *inst/doc/GOFvignette.html
+ce58ea979633e58183340f2a7cbff0a1 *inst/doc/GOFvignette.html
 f779960b368b74d7b5d5b9f3ee7e880a *inst/doc/VPCvignette.R
 27c31b0ae885d11647766499ccd7f793 *inst/doc/VPCvignette.Rmd
-7b833cdad4f019066e612becb6dbc99b *inst/doc/VPCvignette.html
+07f3b170a995f521955ab7ee8f7056ee *inst/doc/VPCvignette.html
 4d88bfb3335882b1b38e13ade13ccc89 *inst/extdata/DV_matrix.csv
 d56d17233cbc1df8d5297c6e2e47701f *inst/extdata/run001.cov
 b0fa7c4dcd2aad2935fdcdafb73d2a6a *inst/extdata/run001.ext
