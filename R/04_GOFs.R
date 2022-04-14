@@ -816,6 +816,8 @@ eta.qqnorm.GOF<-function(data,title="",drop.fixed=TRUE,refline=TRUE,id.column="I
 #' covariates, list of character strings
 #' @param ETA.subset
 #' index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.
+#' @param exclude.zero.ETA
+#' If set to TRUE any ETA==0 is excluded before plotting. This option is useful if the model have full shrinkage for subset of individuals e.g. for ETA on ED50 in patents on placebo or on dose==0.
 #' @param title
 #' title
 #' @param drop.fixed
@@ -845,14 +847,14 @@ eta.qqnorm.GOF<-function(data,title="",drop.fixed=TRUE,refline=TRUE,id.column="I
 #' @importFrom ggplot2 coord_flip
 #' @importFrom ggplot2 geom_density_2d
 #' @importFrom reshape2 melt
-eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,title="",drop.fixed=TRUE,id.column="ID",
+eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,exclude.zero.ETA=FALSE,title="",drop.fixed=TRUE,id.column="ID",
 	standardize=TRUE,refline=TRUE,type=c("all-in-one","covariate-by-page","eta-by-page"),
 	layout=c("ETAbyROW","ETAbyCOL"),add.loess=TRUE,control=GOF.control()){
 
 	layout<-match.arg(layout)
 	type  <-match.arg(type)
 
-	variable<-ETAid<-NULL
+	variable<-ETAid<-value<-NULL
 
 	covariates=intersect(colnames(data),covariates)
 	if(length(covariates)==0){
@@ -884,10 +886,10 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,title="",dr
 	}
 	if(drop.fixed){
 		if(length(ii)>1){
-			jj<-which(apply(data[,ii],2,sd)>0)
+		  jj <- which(apply(data[, ii], 2, sd,na.rm=TRUE) > 0)
 		}
 		if(length(ii)==1){
-			jj<- sd(data[,ii])>0
+		  jj <- sd(data[, ii],na.rm=TRUE) > 0
 		}
 		ii<-ii[jj]
 		kk<-kk[jj]
@@ -902,14 +904,17 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,title="",dr
 		ylab="Standardized ETA value"
 		ylab2="Standardized "
 		for(i in ii){
-			sdi<-sd(data[,i])
-			if(sdi>0){
-				data[,i]<-data[,i]/sdi
-			}
+		  sdi <- sd(data[, i],na.rm=TRUE)
+		  if ((sum(!is.na(data[, i]))>1) & !is.na(sdi) & sdi > 0) {   #new
+		    data[, i] <- data[, i]/sdi
+		  }
 		}
 	}
 	n_eta<-length(ii)
 	tmp<-melt(data,id.vars=colnames(data)[-ii])
+	if(exclude.zero.ETA){ #new
+	  tmp<-subset(tmp,value!=0)  #new
+	}                           #new
 	if(length(eta.labels)>0){
 		eta.levs<-paste(levels(tmp$variable),"(",eta.labels[kk],")",sep="")
 		tmp$variable<-factor(eta.levs[as.numeric(tmp$variable)],levels=eta.levs)
@@ -974,13 +979,13 @@ eta.cov.GOF<-function(data,covariates=c("AGE","BWT"),ETA.subset=NULL,title="",dr
 #' set.script.name("MyScript.R")
 #' eta.cat.GOF(sdtab,covariates=c("SEXM"))
 #' @export
-eta.cat.GOF<-function(data,covariates=c("SEXM"),ETA.subset=NULL,title="",drop.fixed=TRUE,id.column="ID",
+eta.cat.GOF<-function(data,covariates=c("SEXM"),ETA.subset=NULL,exclude.zero.ETA=FALSE,title="",drop.fixed=TRUE,id.column="ID",
 	standardize=TRUE,refline=TRUE,type=c("all-in-one","covariate-by-page","eta-by-page"),
 	layout=c("ETAbyROW","ETAbyCOL"),add.points=TRUE,control=GOF.control()){
 
 	layout<-match.arg(layout)
 	type  <-match.arg(type)
-	variable<-ETAid<-NULL
+	variable<-ETAid<-value<-NULL
 
 	covariates=intersect(colnames(data),covariates)
 	if(length(covariates)==0){
@@ -1012,12 +1017,12 @@ eta.cat.GOF<-function(data,covariates=c("SEXM"),ETA.subset=NULL,title="",drop.fi
 	}
 
 	if(drop.fixed){
-		if(length(ii)>1){
-			jj<-which(apply(data[,ii],2,sd)>0)
-		}
-		if(length(ii)==1){
-			jj<- sd(data[,ii])>0
-		}
+	  if (length(ii) > 1) {
+	    jj <- which(apply(data[, ii], 2, sd,na.rm=TRUE) > 0)  ## new
+	  }
+	  if (length(ii) == 1) {
+	    jj <- sd(data[, ii],na.rm=TRUE) > 0    ## new
+	  }
 		ii<-ii[jj]
 		kk<-kk[jj]
 	}
@@ -1031,14 +1036,17 @@ eta.cat.GOF<-function(data,covariates=c("SEXM"),ETA.subset=NULL,title="",drop.fi
 		ylab="Standardized ETA value"
 		ylab2="Standardized "
 		for(i in ii){
-			sdi<-sd(data[,i])
-			if(sdi>0){
-				data[,i]<-data[,i]/sdi
-			}
+		  sdi <- sd(data[, i],na.rm=TRUE)  ##new
+		  if ((sum(!is.na(data[, i]))>1) & !is.na(sdi) & sdi > 0) {   ##new
+		    data[, i] <- data[, i]/sdi
+		  }
 		}
 	}
 	n_eta<-length(ii)
 	tmp<-melt(data,id.vars=colnames(data)[-ii])
+	if(exclude.zero.ETA){ #new
+	  tmp<-subset(tmp,value!=0)  #new
+	}                           #new
 	if(length(eta.labels)>0){
 		eta.levs<-paste(levels(tmp$variable),"(",eta.labels[kk],")",sep="")
 		tmp$variable<-factor(eta.levs[as.numeric(tmp$variable)],levels=eta.levs)

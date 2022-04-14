@@ -7,16 +7,18 @@
 \title{Covariate and pairs ETA GOFs}
 \usage{
 eta.cov.GOF(data, covariates = c("AGE", "BWT"), ETA.subset = NULL,
-  title = "", drop.fixed = TRUE, id.column = "ID",
-  standardize = TRUE, refline = TRUE, type = c("all-in-one",
-  "covariate-by-page", "eta-by-page"), layout = c("ETAbyROW",
-  "ETAbyCOL"), add.loess = TRUE, control = GOF.control())
+  exclude.zero.ETA = FALSE, title = "", drop.fixed = TRUE,
+  id.column = "ID", standardize = TRUE, refline = TRUE,
+  type = c("all-in-one", "covariate-by-page", "eta-by-page"),
+  layout = c("ETAbyROW", "ETAbyCOL"), add.loess = TRUE,
+  control = GOF.control())
 
 eta.cat.GOF(data, covariates = c("SEXM"), ETA.subset = NULL,
-  title = "", drop.fixed = TRUE, id.column = "ID",
-  standardize = TRUE, refline = TRUE, type = c("all-in-one",
-  "covariate-by-page", "eta-by-page"), layout = c("ETAbyROW",
-  "ETAbyCOL"), add.points = TRUE, control = GOF.control())
+  exclude.zero.ETA = FALSE, title = "", drop.fixed = TRUE,
+  id.column = "ID", standardize = TRUE, refline = TRUE,
+  type = c("all-in-one", "covariate-by-page", "eta-by-page"),
+  layout = c("ETAbyROW", "ETAbyCOL"), add.points = TRUE,
+  control = GOF.control())
 
 eta.pairs.GOF(data, ETA.subset = NULL, title = "", drop.fixed = TRUE,
   id.column = "ID", density2D = c("none", "upper", "lower"),
@@ -28,6 +30,8 @@ eta.pairs.GOF(data, ETA.subset = NULL, title = "", drop.fixed = TRUE,
 \item{covariates}{covariates, list of character strings}
 
 \item{ETA.subset}{index for subset of ETA's to plot. If NULL (default) all ETA's are plotted.}
+
+\item{exclude.zero.ETA}{If set to TRUE any ETA==0 is excluded before plotting. This option is useful if the model have full shrinkage for subset of individuals e.g. for ETA on ED50 in patents on placebo or on dose==0.}
 
 \item{title}{title}
 

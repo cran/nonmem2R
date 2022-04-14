@@ -168,7 +168,7 @@ vpcfig3<-function(sdtab,
 	x<-y<-MDV<-g_g<-group<-group2<-q5<-q95<-x_x_x<-y_y_y<-NULL
 
 	d10<-sdtab
-	if(class(sdtab)=="character"){
+	if(inherits(sdtab,"character")){
 		file1<-paste(file.path,sdtab,sep="")
 		cat("loading sdtab data from ",file1,"\n")
 		#### 1) load the sdtab file and remove any DV=1 data, rename DV variable to y_y_y, and idv variable to x_x_x
@@ -177,7 +177,7 @@ vpcfig3<-function(sdtab,
 	d10<-subset(d10,MDV==0)
 
 	d20<-vpcdir
-	if(class(vpcdir)=="character"){
+	if(inherits(vpcdir,"character")){
 		#### 2) load the matrix file
 		file1<-paste(file.path,vpcdir,"/m1/",dv,"_matrix.csv",sep="")
 		cat("loading simulation data from ",file1,"\n")
