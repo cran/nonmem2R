@@ -1,4 +1,6 @@
-nonmem2R v0.2.4 (Release date: 2022-04-13)
+nonmem2R v0.2.5 (Release date: 2024-04-11)
+==============
+* Minor update to resolve check notes. Only related to help/man file.
 ==============
 * Added option exclude.zero.ETA to eta.cov.GOF and eta.cat.GOF. Setting exclude.zero.ETA=TRUE will remove any ETA==0 before plotting. This option is useful if the model have full shrinkage for subset of individuals e.g. for ETA on ED50 in patents on placebo or on dose==0. By default exclude.zero.ETA is FALSE and have no effect.
 

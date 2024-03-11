@@ -4,7 +4,9 @@
 \name{PositionScale}
 \alias{PositionScale}
 \title{ggproto for position_scale}
-\format{An object of class \code{PositionScale} (inherits from \code{PositionDodge}, \code{Position}, \code{ggproto}, \code{gg}) of length 5.}
+\format{
+An object of class \code{PositionScale} (inherits from \code{PositionDodge}, \code{Position}, \code{ggproto}, \code{gg}) of length 5.
+}
 \usage{
 PositionScale
 }

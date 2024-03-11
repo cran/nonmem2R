@@ -4,7 +4,9 @@
 \name{StatDnorm}
 \alias{StatDnorm}
 \title{ggproto for stat_dnorm}
-\format{An object of class \code{StatDnorm} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
+\format{
+An object of class \code{StatDnorm} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.
+}
 \usage{
 StatDnorm
 }

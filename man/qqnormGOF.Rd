@@ -4,13 +4,20 @@
 \alias{qqnormGOF}
 \title{QQ-norm GOF}
 \usage{
-qqnormGOF(data, x, title = "", color = "", fx = NULL,
-  refline = TRUE, control = GOF.control())
+qqnormGOF(
+  data,
+  sample,
+  title = "",
+  color = "",
+  fx = NULL,
+  refline = TRUE,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}
 
-\item{x}{character string with name of column for x}
+\item{sample}{character string with name of column for x}
 
 \item{title}{title}
 

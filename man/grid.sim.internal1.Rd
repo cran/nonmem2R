@@ -4,8 +4,7 @@
 \alias{grid.sim.internal1}
 \title{Internal function}
 \usage{
-grid.sim.internal1(n, means = NULL, sigma, grid.param = NULL,
-  pure.sim = FALSE)
+grid.sim.internal1(n, means = NULL, sigma, grid.param = NULL, pure.sim = FALSE)
 }
 \arguments{
 \item{n}{Number of simulations}

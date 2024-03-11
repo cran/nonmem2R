@@ -465,7 +465,7 @@ covload <- function (model, use.model.path = TRUE, last.table.only = TRUE,theta.
 #' model
 #' @param skip
 #' number of rows to skip
-#' @param nrows
+#' @param nrow
 #' number of rows to read
 #' @param use.model.path
 #' Load file from a global defined model library (TRUE=default).
@@ -970,66 +970,4 @@ sumoRU<-function(file.path){
       paste(letters[c(14,5,20)],collapse=""),sep="")," \"cd $(pwd); module unload psn && module load psn && sumo",file.path, "\""))
 }
 
-
-####################################################
-#' Run qpsn system call
-#'
-#' @description
-#' Run qpsn system call on system where psn is available.
-#' If psn is not available system{base} is used.
-#'
-#' @param cmd
-#' qpsn cmd
-#' @param use.model.path
-#' Run cmd in a specified model library (TRUE=default).
-#' If so will look for a global character vector named \code{model.path} and
-#' run the system cmd the folder path as specified in \code{model.path}.
-#' @param ml
-#' String for what module to load
-#' @param ...
-#' Further arguments
-# @return
-# named list
-#' @export
-#' @examples
-#' # List files in working directory
-#' try(systemPSN("ls -l"))
-#'
-#' # List file in working directory indluding sun-directories
-#' try(systemPSN("ls * -l"))
-systemPSN<-function (cmd,use.model.path=TRUE,ml="ml psn nonmem-standard", ...)
-{
-  zzz<-paste(
-    "ssh -q ",
-    paste(letters[c(12,15,7,9,14)],collapse=""),
-    ".",
-    paste(letters[c(19,3,16)],collapse=""),
-    ".",
-    paste(letters[c(1,19,20,18,1,26,5,14,5,3,1)],collapse=""),
-    ".",
-    paste(letters[c(14,5,20)],collapse="")," \"cd $(pwd); ",sep="")
-
-  cmd1<-paste(zzz,ml,"&& ")
-  cmd2<-""
-
-  file.path<-get.model.path()
-  if(file.path != ""){
-    cmd2<-paste(" cd ",file.path," &&")
-  }
-  sysinfo<-Sys.info()
-  if (grepl(".scp", sysinfo["nodename"]) & tolower(sysinfo["sysname"])=="linux") {
-    #print(paste0(cmd1, cmd2, cmd, "\""))
-    value <- system(paste0(cmd1, cmd2, cmd, "\""), ...)
-    if(!(0%in% value)){
-      stop(paste("systemPSN could not execute your command\nTry this if you have not done this before:\n1) click terminal (above the console window)\n2) type: ssh",
-                 substr(zzz,7,33),
-                 "\n3) if it asks you if you want to connect, type yes and then enter.\n4) Now try submitting your command again\n5) If the above does not help, you may also need to remove the file known hosts for remote login.\nIt is in your .ssh folder in your home directory, navigate to your home and type:  rm  .ssh/known_hosts",sep="")
-      )
-    }
-    invisible(value)
-  }
-  else {
-    system(cmd, ...)
-  }
-}
 

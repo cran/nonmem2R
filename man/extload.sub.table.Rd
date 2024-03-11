@@ -4,8 +4,13 @@
 \alias{extload.sub.table}
 \title{Internal package function}
 \usage{
-extload.sub.table(model, skip, nrows, positive.iterations.only,
-  use.model.path = TRUE)
+extload.sub.table(
+  model,
+  skip,
+  nrows,
+  positive.iterations.only,
+  use.model.path = TRUE
+)
 }
 \arguments{
 \item{model}{model}

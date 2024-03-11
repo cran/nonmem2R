@@ -72,7 +72,8 @@
 #' If strata.names=NULL then strata.subset is matched to names as specified in vpcresult file.
 #' Default is to use all strata's (strata.subset=NULL).
 #'
-#' The fy and fx arguments can be used to alter the scale of data plotted. For example, using fy=function(y){log(y+1)}
+#' The fy and fx arguments can be used to alter the scale of data plotted.
+#' For example, using fy=function(y)(log(y+1))
 #' is a convenient way to get log-scale for y-axis but with an off-set to show any values==0. Proper y tick marks
 #' can then be set by using the xyplot argument scales.
 #'

@@ -428,7 +428,7 @@ histGOF<-function(data,x,title="",color="",fx=NULL,bins=NA,refline=TRUE,control=
 #' and caption added as reurned by get.caption
 #' @param data
 #' data.frame to plot
-#' @param x
+#' @param sample
 #' character string with name of column for x
 #' @param title
 #' title
@@ -441,40 +441,48 @@ histGOF<-function(data,x,title="",color="",fx=NULL,bins=NA,refline=TRUE,control=
 #' @param control
 #' an optional list of control settings. See GOF.control for the names of the settable control values and their effect.
 #' @export
-#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 ggplot stat_qq_line stat_qq
 #' @examples
 #' dd<-data.frame(CWRES=rnorm(100))
 #' qqnormGOF(dd,"CWRES")
-qqnormGOF<-function(data,x,title="",color="",fx=NULL,refline=TRUE,control=GOF.control()){
-	if(!is.null(fx)){
-		data[,x]<-fx(data[,x])
-	}
-	xlab<-get.label(x,fx)
-	if(is.null(fx)){
-		fx<-identity
-	}
+qqnormGOF<-function(data,sample,title="",color="",fx=NULL,refline=TRUE,control=GOF.control()){
+  if(!is.null(fx)){
+    data[,sample]<-fx(data[,sample])
+  }
+  xlab<-get.label(sample,fx)
+  if(is.null(fx)){
+    fx<-identity
+  }
 
-	#### Re code using geom for qqnorm (in nonmem2R) AND add refline for the nonmem2R function
-	pp<-ggplot(data,aes_string(x=x)) +
-		labs(color="",y=xlab,x="Theoretical Quantiles")
+  #### Re code using geom for qqnorm (in nonmem2R) AND add refline for the nonmem2R function
+  if(color==""){
+    pp<-ggplot(data,aes_string(sample=sample)) +
+      stat_qq()+
+      labs(color="",y=xlab,x="Theoretical Quantiles")
+  }
+  else{
+    pp<-ggplot(data,aes_string(sample=sample,color=color)) +
+      stat_qq()+
+      labs(color="",y=xlab,x="Theoretical Quantiles")
+  }
 
-	if(color==""){
-		pp<-pp+stat_QQnorm(col=control$col.data,cex=control$cex.data,pch=control$pch.data,alpha=control$alpha.data)
-	}else{
-		pp<-pp+stat_QQnorm(aes_string(x=x,color=color),cex=control$cex.data,pch=control$pch.data,alpha=control$alpha.data)
-	}
-
-	if(refline){
-		pp<-pp+	stat_QQrefline(col=control$col.refline,lty=control$lty.refline,lwd=control$lwd.refline)
-	}
-	if(control$add.caption){
-		pp<-add.caption(pp,control)
-	}
-	if(!(title=="" | is.null(title))){
-		pp<-pp+labs(title=title)
-	}
-	pp
+  if(refline){
+    if(color==""){
+      pp<-pp+	stat_qq_line(col=control$col.refline,lty=control$lty.refline,lwd=control$lwd.refline)
+    }
+    else{
+      pp<-pp+	stat_qq_line(lty=control$lty.refline,lwd=control$lwd.refline)
+    }
+  }
+  if(control$add.caption){
+    pp<-add.caption(pp,control)
+  }
+  if(!(title=="" | is.null(title))){
+    pp<-pp+labs(title=title)
+  }
+  pp
 }
+
 
 #------------------- * *  merge2GOF  * * ---------------------------------
 #' Merging 2, 4, or 6 GOF's into one graph

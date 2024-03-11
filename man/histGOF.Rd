@@ -4,8 +4,16 @@
 \alias{histGOF}
 \title{Histogram GOF}
 \usage{
-histGOF(data, x, title = "", color = "", fx = NULL, bins = NA,
-  refline = TRUE, control = GOF.control())
+histGOF(
+  data,
+  x,
+  title = "",
+  color = "",
+  fx = NULL,
+  bins = NA,
+  refline = TRUE,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

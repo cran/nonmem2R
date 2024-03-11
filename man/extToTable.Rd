@@ -4,8 +4,14 @@
 \alias{extToTable}
 \title{Compile parameter table suitable for reports}
 \usage{
-extToTable(model, use.model.path = TRUE, tableType = 2, wide = TRUE,
-  format.estimate = "\% -#6.4g", format.rse = "\%#6.3g")
+extToTable(
+  model,
+  use.model.path = TRUE,
+  tableType = 2,
+  wide = TRUE,
+  format.estimate = "\% -#6.4g",
+  format.rse = "\%#6.3g"
+)
 }
 \arguments{
 \item{model}{name of the ext file with or without the .ext extension.

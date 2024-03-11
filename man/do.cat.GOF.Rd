@@ -4,10 +4,20 @@
 \alias{do.cat.GOF}
 \title{Y vs categorical X GOF-plot}
 \usage{
-do.cat.GOF(data, x, y, color = "", add.points = TRUE,
+do.cat.GOF(
+  data,
+  x,
+  y,
+  color = "",
+  add.points = TRUE,
   refline = c("abline", "href0", "hrefmean", "hrefmedian", "none"),
-  title = "", lines.by.id = FALSE, id.column = "ID", fx = NULL,
-  fy = NULL, control = GOF.control())
+  title = "",
+  lines.by.id = FALSE,
+  id.column = "ID",
+  fx = NULL,
+  fy = NULL,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

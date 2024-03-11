@@ -4,9 +4,16 @@
 \alias{stat_corr}
 \title{Adding correlation to x-y plots}
 \usage{
-stat_corr(mapping = NULL, data = NULL, geom = "text",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+stat_corr(
+  mapping = NULL,
+  data = NULL,
+  geom = "text",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by aes or aes_.}

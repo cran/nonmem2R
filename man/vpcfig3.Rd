@@ -4,14 +4,32 @@
 \alias{vpcfig3}
 \title{Visual Predictive Check (VPC) based on raw Perl-speaks-NONMEM (PsN) generated VPC files.}
 \usage{
-vpcfig3(sdtab, vpcdir, use.model.path = TRUE, dv = "DV",
-  idvs = "TIME", numerical = rep(TRUE, length(idvs)), strata = NULL,
-  method = c("loess", "spline"), pred.corr = c("none",
-  "pred-corr-pro p", "pred-corr-add"), maxNsim = NULL, knots = 5,
-  minobs = 8, col.data = "gray20", cex.data = 1, pch.data = 19,
-  alpha.data = 0.5, col.line = "grey20", lwd.line = 1,
-  lty.line = 1, col.segm = "steelblue", alpha.segm = 0.6, type = 3,
-  control = GOF.control(), ...)
+vpcfig3(
+  sdtab,
+  vpcdir,
+  use.model.path = TRUE,
+  dv = "DV",
+  idvs = "TIME",
+  numerical = rep(TRUE, length(idvs)),
+  strata = NULL,
+  method = c("loess", "spline"),
+  pred.corr = c("none", "pred-corr-pro p", "pred-corr-add"),
+  maxNsim = NULL,
+  knots = 5,
+  minobs = 8,
+  col.data = "gray20",
+  cex.data = 1,
+  pch.data = 19,
+  alpha.data = 0.5,
+  col.line = "grey20",
+  lwd.line = 1,
+  lty.line = 1,
+  col.segm = "steelblue",
+  alpha.segm = 0.6,
+  type = 3,
+  control = GOF.control(),
+  ...
+)
 }
 \arguments{
 \item{sdtab}{file path to sdtab output from model, ALTERNATIVELY a data.fram of the loaded sdtab file. See details.}

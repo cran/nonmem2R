@@ -4,16 +4,35 @@
 \alias{vpcfig2}
 \title{Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (ggplot2-version).}
 \usage{
-vpcfig2(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
-  use.model.path = TRUE, strata.names = NULL, strata.subset = NULL,
-  median.only = FALSE, bin.idv = c("median", "midpoint"),
-  percentile = 10, fy = function(y) {     y }, fx = function(x) {    
-  x }, xlab = NULL, ylab = NULL, col.data = "gray20", cex.data = 1,
-  pch.data = 19, alpha.data = 0.5, col.line = "grey20",
-  lwd.line = 1, lty.line = c(2, 1, 2), col.segm = c("steelblue",
-  "gray50", "steelblue"), alpha.segm = 0.6, type = 3,
-  panel.height.censored = 0.25, censoring.labels = c("ALQ", "BLQ"),
-  ignore.censoring = FALSE, control = GOF.control())
+vpcfig2(
+  vpcdir = NULL,
+  vpctab = NULL,
+  vpcresult = NULL,
+  use.model.path = TRUE,
+  strata.names = NULL,
+  strata.subset = NULL,
+  median.only = FALSE,
+  bin.idv = c("median", "midpoint"),
+  percentile = 10,
+  fy = function(y) {     y },
+  fx = function(x) {     x },
+  xlab = NULL,
+  ylab = NULL,
+  col.data = "gray20",
+  cex.data = 1,
+  pch.data = 19,
+  alpha.data = 0.5,
+  col.line = "grey20",
+  lwd.line = 1,
+  lty.line = c(2, 1, 2),
+  col.segm = c("steelblue", "gray50", "steelblue"),
+  alpha.segm = 0.6,
+  type = 3,
+  panel.height.censored = 0.25,
+  censoring.labels = c("ALQ", "BLQ"),
+  ignore.censoring = FALSE,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{vpcdir}{Path of directory of the VPC files}

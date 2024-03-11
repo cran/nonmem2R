@@ -4,9 +4,16 @@
 \alias{stat_hmean}
 \title{Horizontal reference at mean}
 \usage{
-stat_hmean(mapping = NULL, data = NULL, geom = "hline",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+stat_hmean(
+  mapping = NULL,
+  data = NULL,
+  geom = "hline",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by aes or aes_.}

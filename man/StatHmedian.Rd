@@ -4,7 +4,9 @@
 \name{StatHmedian}
 \alias{StatHmedian}
 \title{ggproto for stat_hmedian}
-\format{An object of class \code{StatHmedian} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
+\format{
+An object of class \code{StatHmedian} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.
+}
 \usage{
 StatHmedian
 }

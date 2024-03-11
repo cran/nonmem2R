@@ -4,7 +4,9 @@
 \name{StatCorr}
 \alias{StatCorr}
 \title{ggproto for stat_corr}
-\format{An object of class \code{StatCorr} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
+\format{
+An object of class \code{StatCorr} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.
+}
 \usage{
 StatCorr
 }

@@ -5,15 +5,34 @@
 \alias{basic.GOF6}
 \title{Basic 4- and 6-panel GOF}
 \usage{
-basic.GOF4(data, residual = "CWRES", idv1 = "IPRED", idv2 = "TIME",
-  title = "", color = "", log.scale = FALSE,
-  global.ggplot.options = NULL, refline = TRUE, add.loess = TRUE,
-  control = GOF.control())
+basic.GOF4(
+  data,
+  residual = "CWRES",
+  idv1 = "IPRED",
+  idv2 = "TIME",
+  title = "",
+  color = "",
+  log.scale = FALSE,
+  global.ggplot.options = NULL,
+  refline = TRUE,
+  add.loess = TRUE,
+  control = GOF.control()
+)
 
-basic.GOF6(data, residual = "CWRES", idv1 = "IPRED", idv2 = "TIME",
-  title = "", color = "", log.scale = FALSE,
-  global.ggplot.options = NULL, refline = TRUE, add.loess = TRUE,
-  bins = NA, control = GOF.control())
+basic.GOF6(
+  data,
+  residual = "CWRES",
+  idv1 = "IPRED",
+  idv2 = "TIME",
+  title = "",
+  color = "",
+  log.scale = FALSE,
+  global.ggplot.options = NULL,
+  refline = TRUE,
+  add.loess = TRUE,
+  bins = NA,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

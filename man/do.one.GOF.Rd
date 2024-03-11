@@ -4,10 +4,20 @@
 \alias{do.one.GOF}
 \title{X-Y GOF-plot}
 \usage{
-do.one.GOF(data, x, y, color = "", add.loess = TRUE,
+do.one.GOF(
+  data,
+  x,
+  y,
+  color = "",
+  add.loess = TRUE,
   refline = c("abline", "href0", "hrefmean", "hrefmedian", "none"),
-  title = "", lines.by.id = FALSE, id.column = "ID", fx = NULL,
-  fy = NULL, control = GOF.control())
+  title = "",
+  lines.by.id = FALSE,
+  id.column = "ID",
+  fx = NULL,
+  fy = NULL,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

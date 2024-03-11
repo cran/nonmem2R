@@ -6,23 +6,48 @@
 \alias{eta.pairs.GOF}
 \title{Covariate and pairs ETA GOFs}
 \usage{
-eta.cov.GOF(data, covariates = c("AGE", "BWT"), ETA.subset = NULL,
-  exclude.zero.ETA = FALSE, title = "", drop.fixed = TRUE,
-  id.column = "ID", standardize = TRUE, refline = TRUE,
+eta.cov.GOF(
+  data,
+  covariates = c("AGE", "BWT"),
+  ETA.subset = NULL,
+  exclude.zero.ETA = FALSE,
+  title = "",
+  drop.fixed = TRUE,
+  id.column = "ID",
+  standardize = TRUE,
+  refline = TRUE,
   type = c("all-in-one", "covariate-by-page", "eta-by-page"),
-  layout = c("ETAbyROW", "ETAbyCOL"), add.loess = TRUE,
-  control = GOF.control())
+  layout = c("ETAbyROW", "ETAbyCOL"),
+  add.loess = TRUE,
+  control = GOF.control()
+)
 
-eta.cat.GOF(data, covariates = c("SEXM"), ETA.subset = NULL,
-  exclude.zero.ETA = FALSE, title = "", drop.fixed = TRUE,
-  id.column = "ID", standardize = TRUE, refline = TRUE,
+eta.cat.GOF(
+  data,
+  covariates = c("SEXM"),
+  ETA.subset = NULL,
+  exclude.zero.ETA = FALSE,
+  title = "",
+  drop.fixed = TRUE,
+  id.column = "ID",
+  standardize = TRUE,
+  refline = TRUE,
   type = c("all-in-one", "covariate-by-page", "eta-by-page"),
-  layout = c("ETAbyROW", "ETAbyCOL"), add.points = TRUE,
-  control = GOF.control())
+  layout = c("ETAbyROW", "ETAbyCOL"),
+  add.points = TRUE,
+  control = GOF.control()
+)
 
-eta.pairs.GOF(data, ETA.subset = NULL, title = "", drop.fixed = TRUE,
-  id.column = "ID", density2D = c("none", "upper", "lower"),
-  standardize = TRUE, control = GOF.control())
+eta.pairs.GOF(
+  data,
+  ETA.subset = NULL,
+  title = "",
+  drop.fixed = TRUE,
+  id.column = "ID",
+  density2D = c("none", "upper", "lower"),
+  standardize = TRUE,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

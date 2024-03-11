@@ -4,7 +4,9 @@
 \name{StatHmean}
 \alias{StatHmean}
 \title{ggproto for stat_hmean}
-\format{An object of class \code{StatHmean} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
+\format{
+An object of class \code{StatHmean} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.
+}
 \usage{
 StatHmean
 }

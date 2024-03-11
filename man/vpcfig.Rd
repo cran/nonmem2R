@@ -4,13 +4,29 @@
 \alias{vpcfig}
 \title{Visual Predictive Check (VPC) based on Perl-speaks-NONMEM (PsN) generated VPC files (lattice version).}
 \usage{
-vpcfig(vpcdir = NULL, vpctab = NULL, vpcresult = NULL,
-  use.model.path = TRUE, strata.names = NULL, strata.subset = NULL,
-  percentile = 10, fy = function(y) {     y }, fx = function(x) {    
-  x }, xlab = NULL, ylab = NULL, col.data = 8, cex.data = 0.3,
-  pch.data = 3, col.line = c("blue", "red", "blue"), lwd.line = c(1,
-  2, 1), lty.line = c(1, 1, 1), col.segm = c("lightblue", "pink",
-  "lightblue"), alpha.segm = c(0.5, 0.5, 0.5), type = 3, ...)
+vpcfig(
+  vpcdir = NULL,
+  vpctab = NULL,
+  vpcresult = NULL,
+  use.model.path = TRUE,
+  strata.names = NULL,
+  strata.subset = NULL,
+  percentile = 10,
+  fy = function(y) {     y },
+  fx = function(x) {     x },
+  xlab = NULL,
+  ylab = NULL,
+  col.data = 8,
+  cex.data = 0.3,
+  pch.data = 3,
+  col.line = c("blue", "red", "blue"),
+  lwd.line = c(1, 2, 1),
+  lty.line = c(1, 1, 1),
+  col.segm = c("lightblue", "pink", "lightblue"),
+  alpha.segm = c(0.5, 0.5, 0.5),
+  type = 3,
+  ...
+)
 }
 \arguments{
 \item{vpcdir}{Path of directory of the VPC files}
@@ -88,7 +104,8 @@ NOTE: strata.subset is matched with strata.names unless strata.names=NULL.
 If strata.names=NULL then strata.subset is matched to names as specified in vpcresult file.
 Default is to use all strata's (strata.subset=NULL).
 
-The fy and fx arguments can be used to alter the scale of data plotted. For example, using fy=function(y){log(y+1)}
+The fy and fx arguments can be used to alter the scale of data plotted.
+For example, using fy=function(y)(log(y+1))
 is a convenient way to get log-scale for y-axis but with an off-set to show any values==0. Proper y tick marks
 can then be set by using the xyplot argument scales.
 }

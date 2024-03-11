@@ -4,11 +4,21 @@
 \alias{do.multi.GOF}
 \title{Multiple Y vs single X GOF-plot}
 \usage{
-do.multi.GOF(data, x, y, color = "", add.loess = TRUE,
+do.multi.GOF(
+  data,
+  x,
+  y,
+  color = "",
+  add.loess = TRUE,
   refline = c("none", "abline", "href0", "hrefmean", "hrefmedian"),
-  title = "", lines.by.id = FALSE, id.column = "ID", fx = NULL,
-  fy = NULL, ylab = "Observations/Predictions",
-  control = GOF.control())
+  title = "",
+  lines.by.id = FALSE,
+  id.column = "ID",
+  fx = NULL,
+  fy = NULL,
+  ylab = "Observations/Predictions",
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

@@ -4,8 +4,12 @@
 \alias{extload}
 \title{Load final parameter values from a nonmem .ext output file.}
 \usage{
-extload(model, use.model.path = TRUE, positive.iterations.only = TRUE,
-  last.table.only = TRUE)
+extload(
+  model,
+  use.model.path = TRUE,
+  positive.iterations.only = TRUE,
+  last.table.only = TRUE
+)
 }
 \arguments{
 \item{model}{name of the ext file with or without the .ext extension.

@@ -6,17 +6,40 @@
 \alias{eta.qqnorm.GOF}
 \title{Histogram and/or QQ-norm GOF for ETA's}
 \usage{
-basic.eta.GOF(data, title = "", global.ggplot.options = NULL,
-  type = c("both", "qqnorm", "hist"), ETA.subset = NULL,
-  refline = TRUE, drop.fixed = TRUE, id.column = "ID",
-  standardize = TRUE, bins = NA, control = GOF.control())
+basic.eta.GOF(
+  data,
+  title = "",
+  global.ggplot.options = NULL,
+  type = c("both", "qqnorm", "hist"),
+  ETA.subset = NULL,
+  refline = TRUE,
+  drop.fixed = TRUE,
+  id.column = "ID",
+  standardize = TRUE,
+  bins = NA,
+  control = GOF.control()
+)
 
-eta.hist.GOF(data, title = "", drop.fixed = TRUE, refline = TRUE,
-  id.column = "ID", standardize = TRUE, bins = NA,
-  control = GOF.control())
+eta.hist.GOF(
+  data,
+  title = "",
+  drop.fixed = TRUE,
+  refline = TRUE,
+  id.column = "ID",
+  standardize = TRUE,
+  bins = NA,
+  control = GOF.control()
+)
 
-eta.qqnorm.GOF(data, title = "", drop.fixed = TRUE, refline = TRUE,
-  id.column = "ID", standardize = TRUE, control = GOF.control())
+eta.qqnorm.GOF(
+  data,
+  title = "",
+  drop.fixed = TRUE,
+  refline = TRUE,
+  id.column = "ID",
+  standardize = TRUE,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

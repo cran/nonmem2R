@@ -4,8 +4,13 @@
 \alias{sumoR}
 \title{Compile summary information for NONMEM model based on the lst file, ext file, and the cov file.}
 \usage{
-sumoR(model, use.model.path = TRUE, tableType = 2,
-  format.estimate = "\% -#6.4g", format.rse = "\%#6.3g")
+sumoR(
+  model,
+  use.model.path = TRUE,
+  tableType = 2,
+  format.estimate = "\% -#6.4g",
+  format.rse = "\%#6.3g"
+)
 }
 \arguments{
 \item{model}{name of the lst file with or without the .lst extension. model may include full or relative path to the lst file.}

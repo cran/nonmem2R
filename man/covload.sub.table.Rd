@@ -4,20 +4,19 @@
 \alias{covload.sub.table}
 \title{Internal package function}
 \usage{
-covload.sub.table(model, skip, nrow, use.model.path = TRUE,
-  theta.only = TRUE)
+covload.sub.table(model, skip, nrow, use.model.path = TRUE, theta.only = TRUE)
 }
 \arguments{
 \item{model}{model}
 
 \item{skip}{number of rows to skip}
 
+\item{nrow}{number of rows to read}
+
 \item{use.model.path}{Load file from a global defined model library (TRUE=default).
 If so will look for a global character vector named \code{model.path}}
 
 \item{theta.only}{return covariance matrix of theta's only (default)}
-
-\item{nrows}{number of rows to read}
 }
 \value{
 Named list including theta, omega, sigma, and ofv. For MCMC output file each object are matrixes.

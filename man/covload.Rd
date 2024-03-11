@@ -4,8 +4,12 @@
 \alias{covload}
 \title{Load the covariance matrix from a nonmem .cov output file.}
 \usage{
-covload(model, use.model.path = TRUE, last.table.only = TRUE,
-  theta.only = TRUE)
+covload(
+  model,
+  use.model.path = TRUE,
+  last.table.only = TRUE,
+  theta.only = TRUE
+)
 }
 \arguments{
 \item{model}{name of the cov file with or without the .cov extension. model may include full or relative path to the cov file. See examples.}

@@ -4,11 +4,20 @@
 \alias{do.individual.GOF}
 \title{Individual GOF-plots}
 \usage{
-do.individual.GOF(data, x = "TIME", y = c("DV", "IPRED", "PRED"),
-  type = c("point", "line", "line"), title = "", per.page = 20,
-  fx = NULL, fy = NULL, ylab = "Observations/Predictions",
-  equal.lims = TRUE, global.ggplot.options = NULL,
-  control = GOF.control())
+do.individual.GOF(
+  data,
+  x = "TIME",
+  y = c("DV", "IPRED", "PRED"),
+  type = c("point", "line", "line"),
+  title = "",
+  per.page = 20,
+  fx = NULL,
+  fy = NULL,
+  ylab = "Observations/Predictions",
+  equal.lims = TRUE,
+  global.ggplot.options = NULL,
+  control = GOF.control()
+)
 }
 \arguments{
 \item{data}{data.frame to plot}

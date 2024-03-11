@@ -4,9 +4,16 @@
 \alias{stat_dnorm}
 \title{Normal density}
 \usage{
-stat_dnorm(mapping = NULL, data = NULL, geom = "line",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+stat_dnorm(
+  mapping = NULL,
+  data = NULL,
+  geom = "line",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by aes or aes_.}
